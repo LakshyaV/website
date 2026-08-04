@@ -36,10 +36,12 @@ export const site = {
   /** Path to a real resume file in /public, or null to hide the link. */
   resume: null as string | null, // TODO: add e.g. "/lakshya-vasudeva-resume.pdf"
 
+  /** `secondary` items are hidden on the narrowest screens so the bar fits. */
   nav: [
-    { label: "Work", href: "/#work" },
-    { label: "About", href: "/#about" },
-    { label: "Notes", href: "/notes" },
-    { label: "Contact", href: "/#contact" },
+    { label: "Work", href: "/#work", secondary: false },
+    { label: "Projects", href: "/#projects", secondary: false },
+    { label: "About", href: "/#about", secondary: true },
+    { label: "Notes", href: "/notes", secondary: false },
+    { label: "Contact", href: "/#contact", secondary: false },
   ],
 } as const;

@@ -28,9 +28,16 @@ update the site; no component changes required.
 | --- | --- |
 | `src/content/site.ts` | Name, email, social URLs, resume path, nav items, canonical URL |
 | `src/content/copy.ts` | Hero, thesis, about, contact, and notes-page copy |
-| `src/content/projects.ts` | The three featured projects and the project index |
+| `src/content/work.ts` | Origin, the Harvard research, and the earlier-roles index |
+| `src/content/projects.ts` | jaw2control, the wheelchair, and the projects index |
+| `src/content/types.ts` | Shared `Featured` / `IndexEntry` shapes |
 | `src/content/notes/` | Published notes as `.mdx` files (see `_README.md` there) |
 | `src/lib/notes.ts` | Notes loader, plus `draftTopics` shown while nothing is published |
+
+The page splits into **Work** (roles: Origin, Harvard, Interac, Zebra,
+Microsoft) and **Projects** (things built independently: jaw2control, the
+wheelchair, AIcruiter, Vursor, CheetCode, VEX). Adding an entry to either index
+is a matter of appending to the relevant array.
 
 `site.ts` fields that are `null` — LinkedIn, X, and `resume` — are treated as
 "not yet available" and are **not rendered anywhere**. Set them to real values
@@ -68,11 +75,25 @@ renders in its final visible state — the site never depends on JS to be
 readable. `prefers-reduced-motion: reduce` disables reveals, diagram staggering,
 and smooth scrolling.
 
-**Diagrams.** The three SVGs in `src/components/diagrams/` are hand-authored
+**Thread rail.** Each index is wrapped in `ThreadRail`
+(`src/components/interactive/`). Every entry declares `capabilities`, and
+selecting one recedes the entries that don't share it while drawing a hairline
+against the ones that do — the through-line between roles and projects made
+visible rather than claimed. Entries are dimmed, never removed, so the reading
+order never changes; the rail hides itself entirely when JavaScript is off.
+Values in an entry's `capabilities` must appear in that section's capability
+list (`workCapabilities` / `projectCapabilities`) to be selectable.
+
+**Diagrams.** The four SVGs in `src/components/diagrams/` are hand-authored
 conceptual illustrations, not plots of real data. Every one is labelled as such
 in its `figcaption`, and that labelling should be preserved if they are edited.
 They keep full detail on small screens by scrolling inside their own container
 rather than shrinking.
+
+Any value derived from `Math.sin`/`Math.exp` that lands in a DOM attribute must
+be rounded (`.toFixed(...)`) before it is rendered. Those functions can differ
+in the last floating-point bit between Node and the browser, which React reports
+as a hydration mismatch.
 
 ## Notes
 

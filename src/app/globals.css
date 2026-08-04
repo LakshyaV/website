@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Self-hosted so the build never depends on a font CDN. */
+@import "@fontsource/instrument-serif/400-italic.css";
 
 /* ---------------------------------- tokens --------------------------------- */
 
@@ -41,6 +43,7 @@
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+  --font-cursive: "Instrument Serif", ui-serif, Georgia, serif;
 }
 
 /* ----------------------------------- base ---------------------------------- */
@@ -67,6 +70,15 @@ body {
   outline: 1px solid var(--fg);
   outline-offset: 3px;
   border-radius: 1px;
+}
+
+/* The thread rail only does something with JS, so it only appears with JS. */
+.thread-rail {
+  display: none;
+}
+
+html.js .thread-rail {
+  display: flex;
 }
 
 /* Theme toggle indicator: half-filled in dark, solid in light. */

@@ -98,7 +98,9 @@ export function SurgicalDiagram() {
                 width="14"
                 height="10"
                 fill="currentColor"
-                opacity={0.06 + weight * 0.5}
+                // Rounded: Math.exp can differ in the last bit between Node and
+                // the browser, which would render as a hydration mismatch.
+                opacity={(0.06 + weight * 0.5).toFixed(4)}
               />
             );
           }),
@@ -115,12 +117,12 @@ export function SurgicalDiagram() {
         </text>
         <line x1="0" y1="212" x2="640" y2="212" stroke="currentColor" strokeWidth="0.75" opacity="0.25" />
         {Array.from({ length: 16 }).map((_, i) => {
-          const h = 8 + Math.abs(Math.sin(i * 1.27)) * 26;
+          const h = Number((8 + Math.abs(Math.sin(i * 1.27)) * 26).toFixed(3));
           return (
             <rect
               key={i}
               x={i * 40}
-              y={212 - h}
+              y={Number((212 - h).toFixed(3))}
               width="26"
               height={h}
               fill="currentColor"

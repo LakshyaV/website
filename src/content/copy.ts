@@ -4,11 +4,19 @@
  */
 
 export const hero = {
-  kicker: "Lakshya Vasudeva",
-  statement: "I build intelligent systems that move computing closer to human intent.",
+  name: "Lakshya Vasudeva",
+  /**
+   * Rendered as: "17. {cursive}machine learning{/cursive} researcher + developer."
+   * Split so the cursive face applies to the middle fragment only.
+   */
+  statement: {
+    lead: "17.",
+    cursive: "machine learning",
+    rest: "researcher + developer.",
+  },
   support:
-    "Currently building Origin — a private, hands-free interface for communicating with AI — and researching machine learning for surgical video with the Ophthalmology AI Lab at Mass Eye and Ear / Harvard Medical School.",
-  enter: { label: "Selected work", href: "#work" },
+    "Building Origin. Researched @ Harvard Research, MIT CSAIL. Prev @ Zebra Tech, Interac Corp.",
+  enter: { label: "The work", href: "#work" },
   meta: [
     "Ontario, Canada",
     "Software Engineering · University of Waterloo",
@@ -20,8 +28,9 @@ export const thesis = {
   number: "01",
   label: "Thesis",
   paragraphs: [
-    "Machine intelligence is compounding. The bandwidth between people and machines is not. Nearly everything we ask of AI still travels through a keyboard, a screen, or a spoken sentence — channels that are slow, public, and demand our full attention.",
-    "I came at this from the building side: programming at seven, then robots, then models. The more capable the systems I built became, the more the interface looked like the bottleneck. Most of my work since has been about widening that channel — decoding intent from signals the body already produces, and teaching models to see what experts see.",
+    "I'm building in order to advance human potential and performance. Machine intelligence is advancing rapidly, and we do not want humans to be the bottleneck.",
+    "Academically, I'm pursuing Software Engineering at UWaterloo, with the goal of training my brain to take overload, think critically, and solve problems. As of now I work in ML, RL, computer vision, neurotech applications, systems thinking, and user-first development.",
+    "The through-line is narrow: everything I build sits at the boundary where a person's intent has to become a machine's action. That boundary is currently the slowest part of computing, and it is the part I want to move.",
   ],
 };
 
@@ -29,9 +38,9 @@ export const about = {
   number: "04",
   label: "About",
   paragraphs: [
-    "I started programming at seven and spent the next few years finding out how much of the world is programmable. By middle school I was teaching older students through a school coding club. FIRST LEGO League turned code into machines; VEX Robotics — where I became software lead and team captain, a provincial champion, and a two-time Worlds qualifier — turned machines into a discipline.",
-    "Machine learning pulled the work somewhere new: recommendation and forecasting systems through work with Interac, an AI development internship at Zebra Technologies, an applied project on data-centre optimization, and research on surgical video with the Ophthalmology AI Lab at Mass Eye and Ear / Harvard Medical School. Along the way a pattern became hard to ignore — I kept building systems that sit between people and machines, and kept finding the interface to be the weakest link.",
-    "That is what Origin is for. I study Software Engineering at the University of Waterloo, and I'm building the input channel I think computing is missing.",
+    "I started programming at seven and spent the next few years finding out how much of the world is programmable. By middle school I was teaching older students through a school coding club. FIRST LEGO League turned code into machines; VEX Robotics — software lead, team captain, provincial champion, two-time Worlds qualifier — turned machines into a discipline.",
+    "The work got professional early. A consulting project with Microsoft on AI data-centre efficiency at fifteen, a software engineering internship at Zebra Technologies at sixteen building for constrained medical hardware, a machine learning partnership project with Interac at seventeen, and research on surgical video at Harvard. Different domains, same pattern: I kept ending up on the seam between a person and a system.",
+    "Along the way the projects got stranger and more specific — a wheelchair driven by EEG, a jaw-sensing wearable that let you command a device by looking at it. Those were the ones that told me where to go. Origin is where that went.",
   ],
 };
 

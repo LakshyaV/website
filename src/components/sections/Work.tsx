@@ -1,22 +1,24 @@
+"use client";
+
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/layout/Reveal";
 import { SectionHeading } from "@/components/layout/SectionHeading";
 import { OriginDiagram } from "@/components/diagrams/OriginDiagram";
 import { SurgicalDiagram } from "@/components/diagrams/SurgicalDiagram";
-import { WheelchairDiagram } from "@/components/diagrams/WheelchairDiagram";
+import { ThreadRail } from "@/components/interactive/ThreadRail";
 import { DiagramPlate, Facets, ProjectTitle } from "./project-parts";
-import { origin, surgical, wheelchair } from "@/content/projects";
+import { EntryRow } from "./EntryRow";
+import { origin, surgical, workCapabilities, workIndex } from "@/content/work";
 
 /**
- * Selected work. Each project deliberately uses a different composition:
- * Origin is full-width and largest, surgical intelligence is split into a
- * text/diagram column pair, and the wheelchair is a compact horizontal band.
+ * Work — what I've been paid or appointed to do. Origin and the Harvard
+ * research get full treatment; earlier roles run as a dense index.
  */
-export function SelectedWork() {
+export function Work() {
   return (
     <section id="work" className="scroll-mt-20 py-20 sm:py-28">
       <Container>
-        <SectionHeading number="02" label="Selected work" />
+        <SectionHeading number="02" label="Work" />
       </Container>
 
       {/* ------------------------------- 01 Origin ------------------------------ */}
@@ -94,41 +96,25 @@ export function SelectedWork() {
         </div>
       </Container>
 
-      {/* --------------------- 03 Mind-controlled wheelchair -------------------- */}
+      {/* ------------------------------ earlier roles ---------------------------- */}
       <Container className="mt-28 sm:mt-36">
         <div className="border-t border-line pt-16 sm:pt-20">
-          <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-10 [&>*]:min-w-0">
-            <div className="lg:col-span-7">
-              <ProjectTitle
-                number={wheelchair.number}
-                status={wheelchair.status}
-                title={wheelchair.title}
-                oneLiner={wheelchair.oneLiner}
-                scale="md"
-              />
-            </div>
-            <div className="lg:col-span-5 lg:pt-16">
-              {wheelchair.paragraphs.map((paragraph, i) => (
-                <Reveal key={i} delay={i * 60}>
-                  <p
-                    className={`max-w-[54ch] text-[0.9375rem] leading-relaxed ${
-                      i === 0 ? "text-muted" : "mt-5 text-muted"
-                    }`}
-                  >
-                    {paragraph}
-                  </p>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-
-          <DiagramPlate caption={wheelchair.diagramCaption} className="mt-14">
-            <WheelchairDiagram />
-          </DiagramPlate>
-
-          <Reveal className="mt-12">
-            <Facets items={wheelchair.facets} layout="row" />
+          <Reveal>
+            <h3 className="text-[1.5rem] tracking-[-0.02em] sm:text-[1.875rem]">Before that</h3>
+            <p className="mt-3 max-w-[52ch] text-[0.9375rem] leading-relaxed text-muted">
+              Three roles, taken at fifteen, sixteen, and seventeen. Different industries,
+              one recurring job: make a model survive contact with a real system.
+            </p>
           </Reveal>
+
+          <ThreadRail
+            capabilities={workCapabilities}
+            entries={workIndex}
+            renderEntry={(entry, i, { dimmed, filtering }) => (
+              <EntryRow entry={entry} index={i} dimmed={dimmed} filtering={filtering} />
+            )}
+          />
+          <div className="border-t border-line" />
         </div>
       </Container>
     </section>

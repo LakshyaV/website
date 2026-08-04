@@ -8,22 +8,26 @@ export function Hero() {
   return (
     <section className="relative pt-16 pb-24 sm:pt-24 sm:pb-32 lg:pt-32 lg:pb-40">
       <Container>
-        <div className="grid gap-y-12 lg:grid-cols-12 lg:gap-x-10">
+        <div className="grid gap-y-12 lg:grid-cols-12 lg:gap-x-10 [&>*]:min-w-0">
           <div className="lg:col-span-9">
             <Reveal>
-              <p className="font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-faint">
-                {hero.kicker}
-              </p>
-            </Reveal>
-
-            <Reveal delay={80}>
-              <h1 className="mt-8 max-w-[22ch] text-[2.25rem] leading-[1.06] tracking-[-0.03em] sm:text-[3.25rem] lg:text-[4.5rem] xl:text-[5rem]">
-                {hero.statement}
+              <h1 className="font-mono text-[0.6875rem] font-normal uppercase tracking-[0.22em] text-faint">
+                {hero.name}
               </h1>
             </Reveal>
 
+            <Reveal delay={80}>
+              <p className="mt-8 max-w-[20ch] text-[2.5rem] leading-[1.04] tracking-[-0.03em] sm:text-[3.75rem] lg:text-[5rem] xl:text-[5.5rem]">
+                {hero.statement.lead}{" "}
+                <span className="font-cursive italic tracking-[-0.01em]">
+                  {hero.statement.cursive}
+                </span>{" "}
+                {hero.statement.rest}
+              </p>
+            </Reveal>
+
             <Reveal delay={180}>
-              <p className="mt-10 max-w-[58ch] text-[0.9375rem] leading-relaxed text-muted sm:text-base">
+              <p className="mt-10 max-w-[54ch] text-[0.9375rem] leading-relaxed text-muted sm:text-base">
                 {hero.support}
               </p>
             </Reveal>

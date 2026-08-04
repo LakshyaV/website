@@ -9,7 +9,7 @@ import { ScrollProgress } from "./ScrollProgress";
 import { ThemeToggle } from "./ThemeToggle";
 import { site } from "@/content/site";
 
-const SECTION_IDS = ["work", "about", "contact"] as const;
+const SECTION_IDS = ["work", "projects", "about", "contact"] as const;
 
 export function Nav() {
   const pathname = usePathname();
@@ -72,7 +72,7 @@ export function Nav() {
           <div className="flex min-w-0 items-center gap-3 sm:gap-7">
             <ul className="flex min-w-0 items-center gap-3.5 sm:gap-6">
               {site.nav.map((item) => (
-                <li key={item.href}>
+                <li key={item.href} className={item.secondary ? "hidden sm:block" : undefined}>
                   <Link
                     href={item.href}
                     aria-current={isActive(item.href) ? "true" : undefined}

@@ -1,73 +1,37 @@
-/**
- * Project content: three featured projects and the supporting index.
- *
- * `outcome` and `link` are optional — entries without them render without
- * those fields. Do not add placeholder values here; leave fields out until
- * real ones exist.
- */
+import type { Featured, IndexEntry } from "./types";
 
-export type FeaturedProject = {
-  id: string;
-  number: string;
-  status: string;
-  title: string;
-  oneLiner: string;
-  paragraphs: string[];
-  facets: { term: string; detail: string }[];
-  diagramCaption: string;
-};
+/** Things built outside of work. jaw2control and the wheelchair get diagrams. */
 
-export const origin: FeaturedProject = {
-  id: "origin",
+export const jaw2control: Featured = {
+  id: "jaw2control",
   number: "01",
-  status: "In development",
-  title: "Origin",
-  oneLiner: "A private, hands-free interface for communicating with AI.",
+  status: "Origin's predecessor",
+  title: "jaw2control",
+  oneLiner: "Silent commands to whatever you happen to be looking at.",
   paragraphs: [
-    "Speaking to a machine still means speaking — out loud, in public, or through a keyboard. Origin is an attempt to remove that constraint: recovering intended language from subtle physiological and neuromuscular signals, so a sentence can travel from a person to an AI without being spoken, typed, or visibly gestured.",
-    "The long-term form is a pair of lightweight glasses. Sensors resting where glasses naturally sit — temple, sideburn, ear — pick up the faint signals produced when language is formed but not voiced, and models decode them toward open-ended natural language rather than a fixed command set.",
-    "An early proof of concept made the channel concrete: sensors near the jaw, an in-house signal dataset, temporal models, semantic decoding, and computer vision wired to device control. It was built quickly to answer one question — can physiological signals carry intent to a machine? They can.",
-    "What that prototype proved is a channel. What remains is language. Open-ended silent decoding is unsolved, and that is the current work: signals captured around the glasses line, decoded into speech that never has to be said.",
+    "Controlling AI still means speaking or typing. Neither works in a room full of people, and typing means going back to a screen. jaw2control was the first attempt at a third option: say it without saying it.",
+    "Two IMUs at the jaw pick up the movement of speech that never becomes sound. A temporal convolutional network, trained on a dataset recorded in-house, reads phonetic structure out of that movement, and the recovered units are decoded semantically into the sentence that was intended.",
+    "The other half is addressing. An OAK-1 camera identifies what the wearer is looking at and routes the decoded command there — glance at a laptop and it becomes a software action, glance at a circuit and it drives hardware. Intent and target arrive together, which is what makes it usable without a screen.",
   ],
   facets: [
-    { term: "Domain", detail: "Neuromuscular & physiological signals" },
-    { term: "Methods", detail: "Temporal ML · semantic decoding" },
-    { term: "Hardware", detail: "Custom sensing, glasses form factor" },
-    { term: "Status", detail: "Active research & engineering" },
+    { term: "Sensing", detail: "2× IMU at the jaw" },
+    { term: "Model", detail: "TCN over in-house dataset" },
+    { term: "Decoding", detail: "Phonetic units → intended speech" },
+    { term: "Targeting", detail: "OAK-1 vision → device routing" },
   ],
   diagramCaption:
-    "Conceptual architecture — signal to intended language. Illustrative only; not experimental data.",
+    "Signal path and command routing. Conceptual illustration; not recorded sensor data.",
 };
 
-export const surgical: FeaturedProject = {
-  id: "surgical-intelligence",
-  number: "02",
-  status: "Research · Ophthalmology AI Lab, Mass Eye and Ear / Harvard Medical School",
-  title: "Surgical intelligence",
-  oneLiner: "Teaching models to watch surgery the way surgeons do.",
-  paragraphs: [
-    "Cataract surgeons train in wet labs, and wet-lab video can be annotated densely — anatomy, instruments, phases, frame by frame. Clinical video from the operating room has no such labels. The research question: can dense annotation from practice procedures teach a model representations that transfer to real clinical video?",
-    "The approach is annotation-guided representation learning. Spatial attention is supervised by anatomy and instrument masks so the model learns where to look; temporal modeling runs over clip sequences to capture how procedures unfold; procedure-level aggregation turns clip representations into video-level classification. Supervision from the lab shapes what the model attends to in the operating room.",
-  ],
-  facets: [
-    { term: "Domain", detail: "Surgical video · cataract procedures" },
-    { term: "Methods", detail: "Supervised spatial attention · temporal modeling" },
-    { term: "Objective", detail: "Wet-lab → clinical transfer" },
-    { term: "Output", detail: "Video-level classification" },
-  ],
-  diagramCaption:
-    "Source-to-target transfer pipeline. Conceptual — masks and frames are illustrative, not patient data.",
-};
-
-export const wheelchair: FeaturedProject = {
+export const wheelchair: Featured = {
   id: "mind-controlled-wheelchair",
-  number: "03",
+  number: "02",
   status: "HOSA — top six nationally",
   title: "Mind-controlled wheelchair",
   oneLiner: "A wheelchair driven by brain signals.",
   paragraphs: [
     "Built around an OpenBCI headset: raw EEG in, motion out. The pipeline filtered noisy scalp signals, extracted frequency-domain features, classified intentional control states, smoothed the output to keep the chair from stuttering, and drove the motors through embedded hardware. It reached the top six nationally at HOSA.",
-    "It was also a hinge point — the first project where robotics, biological signals, and human-computer interaction stopped being separate interests. Origin descends from it.",
+    "It was also a hinge point — the first project where robotics, biological signals, and human-computer interaction stopped being separate interests. Everything since has been downstream of it.",
   ],
   facets: [
     { term: "Signals", detail: "EEG via OpenBCI" },
@@ -78,52 +42,60 @@ export const wheelchair: FeaturedProject = {
   diagramCaption: "Signal chain, acquisition to actuation. Conceptual illustration.",
 };
 
-export const featured = [origin, surgical, wheelchair];
+export const featuredProjects = [jaw2control, wheelchair];
 
-export type IndexEntry = {
-  title: string;
-  context: string;
-  description: string;
-  outcome?: string;
-};
+/** Capability vocabulary for the projects thread rail. */
+export const projectCapabilities = [
+  "LLM agents",
+  "Real-time systems",
+  "Computer vision",
+  "Video understanding",
+  "Embedded",
+];
 
 export const projectIndex: IndexEntry[] = [
   {
+    title: "AIcruiter",
+    context: "Autonomous interview agent",
+    description:
+      "Interviews are biased and expensive, so the agent conducts them end to end — and the hard part is making a conversation feel like one.",
+    bullets: [
+      "HR configures an agent against the role and candidate; the candidate gets a link live for 48 hours",
+      "Audio streams to Deepgram speech-to-text, with live transcripts fed to a streaming Gemini model so it reasons while the candidate is still talking (~1s latency)",
+      "Retrieval over the résumé and company values shapes follow-up questions in real time",
+      "Speech synthesis drives a Tavus-rendered agent; a semantic regression model scores the transcript and results are returned automatically",
+    ],
+    capabilities: ["LLM agents", "Real-time systems"],
+  },
+  {
+    title: "Vursor",
+    context: "Cursor, for video editing",
+    annotation: "YC interview · 1500+ hackers",
+    description:
+      "Describe the edit and the system performs it: “zoom in on X when he puts the drink down” resolves to a moment in the timeline and an operation applied to it.",
+    bullets: [
+      "Grounds natural-language edit instructions against the actual contents of the footage",
+      "Interviewed by Y Combinator out of a 1500+ person field; it did not reach the final three — too broad a market, and too thin a differentiator against other AI editors",
+    ],
+    capabilities: ["Video understanding", "LLM agents"],
+  },
+  {
+    title: "CheetCode",
+    context: "Chrome extension",
+    description:
+      "Reads the screen during a technical interview, solves the problem, and drives the keyboard to type the answer — including staying under the platform's cheating detection.",
+    bullets: [
+      "Screen understanding and synthetic input control running against a live proctored session",
+      "An honest look at how little a remote coding screen actually verifies",
+    ],
+    capabilities: ["Computer vision", "Real-time systems"],
+  },
+  {
     title: "VEX Robotics",
     context: "Software lead · team captain",
+    annotation: "Provincial champion · 2× Worlds",
     description:
       "Autonomous routines, drive control, and season-long iteration under competition constraints — systems that have to work on the first try.",
-    outcome: "Provincial champion · 2× Worlds qualifier",
-  },
-  {
-    title: "Data-centre optimization",
-    context: "Applied AI",
-    description:
-      "Modeling operational behavior in large data centres to surface efficiency gains with AI.",
-    outcome: "Analysis projected $2B+ potential annual savings",
-  },
-  {
-    title: "Zebra Technologies",
-    context: "AI developer intern",
-    description:
-      "Applied AI development inside an enterprise engineering organization — while still in high school.",
-  },
-  {
-    title: "Interac",
-    context: "Recommendation & forecasting",
-    description:
-      "Recommendation and forecasting systems built through work with Interac.",
-  },
-  {
-    title: "AIcruit",
-    context: "Multimodal agent",
-    description:
-      "A multimodal AI interview agent — conducting and assessing structured interviews across modalities.",
-  },
-  {
-    title: "Prompt-driven video editor",
-    context: "Hackathon build",
-    description:
-      "Describe the cut in natural language; the system performs the edit. Built end-to-end in a weekend.",
+    capabilities: ["Embedded"],
   },
 ];
