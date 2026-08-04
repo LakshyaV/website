@@ -65,7 +65,6 @@ export const site = {
   nav: [
     { label: "Work", href: "/#work", secondary: false },
     { label: "Projects", href: "/#projects", secondary: false },
-    { label: "About", href: "/#about", secondary: true },
     { label: "Notes", href: "/notes", secondary: true },
     { label: "Contact", href: "/#contact", secondary: false },
   ],

@@ -9,7 +9,7 @@ import { ScrollProgress } from "./ScrollProgress";
 import { ThemeToggle } from "./ThemeToggle";
 import { site } from "@/content/site";
 
-const SECTION_IDS = ["work", "projects", "about", "contact"] as const;
+const SECTION_IDS = ["work", "projects", "contact"] as const;
 
 export function Nav() {
   const pathname = usePathname();
