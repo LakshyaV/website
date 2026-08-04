@@ -3,24 +3,17 @@
 import { useEffect } from "react";
 
 /**
- * Adds `html.js` (which arms the CSS reveal styles) and observes every
- * [data-reveal] element, adding `.in` once it enters the viewport.
+ * Observes every [data-reveal] element and adds `.in` once it enters the
+ * viewport.
  *
- * If this never runs — JS disabled, script error — the CSS gate means all
- * content renders in its final visible state.
+ * The `js` class that arms the reveal styles is set by the pre-paint script in
+ * the root layout, not here — setting it after hydration would blank content
+ * that had already painted. If this component never runs (JS disabled, script
+ * error), `js` is likewise absent and everything renders in its final visible
+ * state. Reduced motion is handled entirely in CSS.
  */
 export function RevealInit() {
   useEffect(() => {
-    const root = document.documentElement;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    root.classList.add("js");
-
-    if (reduced) {
-      document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("in"));
-      return;
-    }
-
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

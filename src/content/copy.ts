@@ -16,7 +16,7 @@ export const hero = {
     roles: ["researcher", "engineer", "founder"],
   },
   support:
-    "Building Origin. Researched @ Harvard Research, MIT CSAIL. Prev @ Zebra Tech, Interac Corp.",
+    "Building Origin. Researched @ Harvard Medical School, MIT CSAIL. Prev @ Microsoft, Zebra Technologies, Interac.",
   enter: { label: "The work", href: "#work" },
   meta: [
     "Ontario, Canada",
@@ -30,7 +30,7 @@ export const thesis = {
   label: "Thesis",
   paragraphs: [
     "I'm building in order to advance human potential and performance. Machine intelligence is advancing rapidly, and we do not want humans to be the bottleneck.",
-    "Academically, I'm pursuing Software Engineering at UWaterloo, with the goal of training my brain to take overload, think critically, and solve problems. As of now I work in ML, RL, computer vision, neurotech applications, systems thinking, and user-first development.",
+    "Academically, I'm heading into Software Engineering at the University of Waterloo, with the goal of training my brain to take overload, think critically, and solve problems. As of now I work in machine learning, computer vision, neurotech applications, systems thinking, and user-first development.",
     "The through-line is narrow: everything I build sits at the boundary where a person's intent has to become a machine's action. That boundary is currently the slowest part of computing, and it is the part I want to move.",
   ],
 };
@@ -55,5 +55,7 @@ export const contact = {
 export const notesPage = {
   title: "Notes",
   intro:
-    "Short technical writing: working notes on interfaces, biosignal decoding, and machine learning systems. Nothing is published yet — the drafts below are in progress and marked as such.",
+    "Short technical writing: working notes on interfaces, biosignal decoding, and machine learning systems.",
+  /** Shown only while nothing is published. */
+  emptyNote: "Nothing is published yet — the drafts below are in progress and marked as such.",
 };

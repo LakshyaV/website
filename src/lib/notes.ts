@@ -59,27 +59,6 @@ export function getDrafts(): DraftTopic[] {
     .map(({ category, title }) => ({ category, title }));
 }
 
-/**
- * Fallback topic list used only when no draft files exist yet. These are
- * labelled as drafts in the UI and are never presented as published articles.
- */
-export const draftTopics: DraftTopic[] = [
-  {
-    category: "Biosignal decoding",
-    title: "Why a clean channel is not yet a language",
-  },
-  {
-    category: "Machine learning systems",
-    title: "Supervising attention with masks you only have at training time",
-  },
-  {
-    category: "Building hardware",
-    title: "Notes on sensing at the sideburn",
-  },
-];
-
-/** What the notes page shows while nothing is published: real drafts first. */
-export function getInProgress(): DraftTopic[] {
-  const drafts = getDrafts();
-  return drafts.length > 0 ? drafts : draftTopics;
-}
+// Note: there is deliberately no invented fallback list here. If no draft files
+// exist, the notes page says so rather than advertising topics that aren't
+// actually being written.

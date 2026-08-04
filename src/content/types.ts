@@ -4,7 +4,6 @@ export type Facet = { term: string; detail: string };
 
 /** A project or role given full-width treatment with its own diagram. */
 export type Featured = {
-  id: string;
   number: string;
   status: string;
   title: string;

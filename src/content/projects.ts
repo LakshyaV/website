@@ -3,7 +3,6 @@ import type { Featured, IndexEntry } from "./types";
 /** Things built outside of work. jaw2control and the wheelchair get diagrams. */
 
 export const jaw2control: Featured = {
-  id: "jaw2control",
   number: "01",
   status: "Origin's predecessor",
   title: "jaw2control",
@@ -24,7 +23,6 @@ export const jaw2control: Featured = {
 };
 
 export const wheelchair: Featured = {
-  id: "mind-controlled-wheelchair",
   number: "02",
   status: "HOSA — top six nationally",
   title: "Mind-controlled wheelchair",
@@ -41,8 +39,6 @@ export const wheelchair: Featured = {
   ],
   diagramCaption: "Signal chain, acquisition to actuation. Conceptual illustration.",
 };
-
-export const featuredProjects = [jaw2control, wheelchair];
 
 /** Capability vocabulary for the projects thread rail. */
 export const projectCapabilities = [

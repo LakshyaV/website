@@ -1,13 +1,15 @@
 import type { ReactNode } from "react";
 
 import { Reveal } from "@/components/layout/Reveal";
+import { ScrollPlate } from "@/components/interactive/ScrollPlate";
+import type { Facet } from "@/content/types";
 
 /** Compact technical metadata, rendered as a definition list. */
 export function Facets({
   items,
   layout = "row",
 }: {
-  items: { term: string; detail: string }[];
+  items: readonly Facet[];
   layout?: "row" | "stack";
 }) {
   return (
@@ -44,24 +46,7 @@ export function DiagramPlate({
     // min-w-0 matters: as a grid item this would otherwise take its automatic
     // minimum size from the wide diagram inside and stretch the whole track.
     <Reveal className={`min-w-0 ${className}`}>
-      <figure className="min-w-0">
-        {/* Diagrams keep their full detail and scroll inside this plate on
-            narrow screens rather than shrinking to illegibility. */}
-        <div
-          tabIndex={0}
-          role="group"
-          aria-label="Scrollable diagram"
-          className="overflow-x-auto border border-line bg-surface px-5 py-7 sm:px-8 sm:py-10"
-        >
-          <div className="min-w-[36rem]">{children}</div>
-        </div>
-        <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[0.625rem] uppercase leading-relaxed tracking-[0.14em] text-faint">
-          <span className="max-w-[60ch]">{caption}</span>
-          <span aria-hidden className="shrink-0 lg:hidden">
-            Scroll →
-          </span>
-        </figcaption>
-      </figure>
+      <ScrollPlate caption={caption}>{children}</ScrollPlate>
     </Reveal>
   );
 }

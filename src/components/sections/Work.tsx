@@ -1,5 +1,3 @@
-"use client";
-
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/layout/Reveal";
 import { SectionHeading } from "@/components/layout/SectionHeading";
@@ -7,7 +5,6 @@ import { OriginDiagram } from "@/components/diagrams/OriginDiagram";
 import { SurgicalDiagram } from "@/components/diagrams/SurgicalDiagram";
 import { ThreadRail } from "@/components/interactive/ThreadRail";
 import { DiagramPlate, Facets, ProjectTitle } from "./project-parts";
-import { EntryRow } from "./EntryRow";
 import { origin, surgical, workCapabilities, workIndex } from "@/content/work";
 
 /**
@@ -64,7 +61,10 @@ export function Work() {
       {/* ------------------------ 02 Surgical intelligence ---------------------- */}
       <Container className="mt-28 sm:mt-36">
         <div className="border-t border-line pt-16 sm:pt-20">
-          <div className="grid gap-y-12 lg:grid-cols-12 lg:gap-x-10 [&>*]:min-w-0">
+          {/* Text pairs across two columns, then the diagram takes the full
+              measure — a 900-unit viewBox squeezed into a 7-column track was
+              both clipped and rendering its labels below 6px. */}
+          <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-10 [&>*]:min-w-0">
             <div className="lg:col-span-5">
               <ProjectTitle
                 number={surgical.number}
@@ -73,26 +73,30 @@ export function Work() {
                 oneLiner={surgical.oneLiner}
                 scale="lg"
               />
-              <div className="mt-10">
-                {surgical.paragraphs.map((paragraph, i) => (
-                  <Reveal key={i} delay={i * 60}>
-                    <p className="mt-5 max-w-[54ch] text-[0.9375rem] leading-relaxed text-muted">
-                      {paragraph}
-                    </p>
-                  </Reveal>
-                ))}
-              </div>
-              <Reveal className="mt-10">
-                <Facets items={surgical.facets} layout="stack" />
-              </Reveal>
             </div>
 
-            <div className="lg:col-span-7">
-              <DiagramPlate caption={surgical.diagramCaption}>
-                <SurgicalDiagram />
-              </DiagramPlate>
+            <div className="lg:col-span-6 lg:col-start-7 lg:pt-16">
+              {surgical.paragraphs.map((paragraph, i) => (
+                <Reveal key={i} delay={i * 60}>
+                  <p
+                    className={`max-w-[58ch] text-[0.9375rem] leading-relaxed text-muted ${
+                      i === 0 ? "" : "mt-5"
+                    }`}
+                  >
+                    {paragraph}
+                  </p>
+                </Reveal>
+              ))}
             </div>
           </div>
+
+          <DiagramPlate caption={surgical.diagramCaption} className="mt-14">
+            <SurgicalDiagram />
+          </DiagramPlate>
+
+          <Reveal className="mt-12">
+            <Facets items={surgical.facets} layout="row" />
+          </Reveal>
         </div>
       </Container>
 
@@ -107,13 +111,7 @@ export function Work() {
             </p>
           </Reveal>
 
-          <ThreadRail
-            capabilities={workCapabilities}
-            entries={workIndex}
-            renderEntry={(entry, i, { dimmed, filtering }) => (
-              <EntryRow entry={entry} index={i} dimmed={dimmed} filtering={filtering} />
-            )}
-          />
+          <ThreadRail capabilities={workCapabilities} entries={workIndex} />
           <div className="border-t border-line" />
         </div>
       </Container>

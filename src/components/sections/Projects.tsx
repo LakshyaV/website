@@ -1,5 +1,3 @@
-"use client";
-
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/layout/Reveal";
 import { SectionHeading } from "@/components/layout/SectionHeading";
@@ -7,7 +5,6 @@ import { Jaw2ControlDiagram } from "@/components/diagrams/Jaw2ControlDiagram";
 import { WheelchairDiagram } from "@/components/diagrams/WheelchairDiagram";
 import { ThreadRail } from "@/components/interactive/ThreadRail";
 import { DiagramPlate, Facets, ProjectTitle } from "./project-parts";
-import { EntryRow } from "./EntryRow";
 import {
   jaw2control,
   projectCapabilities,
@@ -79,7 +76,11 @@ export function Projects() {
             <div className="lg:col-span-5 lg:pt-16">
               {wheelchair.paragraphs.map((paragraph, i) => (
                 <Reveal key={i} delay={i * 60}>
-                  <p className="mt-5 max-w-[54ch] text-[0.9375rem] leading-relaxed text-muted first:mt-0">
+                  <p
+                    className={`max-w-[54ch] text-[0.9375rem] leading-relaxed text-muted ${
+                      i === 0 ? "" : "mt-5"
+                    }`}
+                  >
                     {paragraph}
                   </p>
                 </Reveal>
@@ -107,13 +108,7 @@ export function Projects() {
             </p>
           </Reveal>
 
-          <ThreadRail
-            capabilities={projectCapabilities}
-            entries={projectIndex}
-            renderEntry={(entry, i, { dimmed, filtering }) => (
-              <EntryRow entry={entry} index={i} dimmed={dimmed} filtering={filtering} />
-            )}
-          />
+          <ThreadRail capabilities={projectCapabilities} entries={projectIndex} />
           <div className="border-t border-line" />
         </div>
       </Container>

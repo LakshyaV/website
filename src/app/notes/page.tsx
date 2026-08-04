@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/layout/Reveal";
 import { notesPage } from "@/content/copy";
-import { getInProgress, getNotes } from "@/lib/notes";
+import { getDrafts, getNotes } from "@/lib/notes";
 
 export const metadata: Metadata = {
   title: "Notes",
@@ -24,7 +24,7 @@ function formatDate(iso: string) {
 
 export default function NotesPage() {
   const notes = getNotes();
-  const inProgress = getInProgress();
+  const inProgress = getDrafts();
 
   return (
     <section className="py-20 sm:py-28">
@@ -45,6 +45,7 @@ export default function NotesPage() {
             <Reveal delay={80}>
               <p className="mt-6 max-w-[58ch] text-[0.9375rem] leading-relaxed text-muted sm:text-base">
                 {notesPage.intro}
+                {notes.length === 0 ? ` ${notesPage.emptyNote}` : ""}
               </p>
             </Reveal>
           </div>
@@ -95,26 +96,34 @@ export default function NotesPage() {
                 </div>
               </Reveal>
 
-              <ul className="mt-8">
-                {inProgress.map((topic, i) => (
-                  <li key={topic.title}>
-                    <Reveal delay={Math.min(i * 60, 240)}>
-                      <div className="grid grid-cols-1 gap-y-2 border-t border-line py-6 sm:grid-cols-12 sm:gap-x-8">
-                        <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-faint sm:col-span-3">
-                          {topic.category}
-                        </p>
-                        <h2 className="text-base leading-snug text-muted sm:col-span-7 sm:text-lg">
-                          {topic.title}
-                        </h2>
-                        <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-faint sm:col-span-2 sm:text-right">
-                          Draft
-                        </p>
-                      </div>
-                    </Reveal>
-                  </li>
-                ))}
-                <li className="border-t border-line" />
-              </ul>
+              {inProgress.length > 0 ? (
+                <ul className="mt-8">
+                  {inProgress.map((topic, i) => (
+                    <li key={topic.title}>
+                      <Reveal delay={Math.min(i * 60, 240)}>
+                        <div className="grid grid-cols-1 gap-y-2 border-t border-line py-6 sm:grid-cols-12 sm:gap-x-8">
+                          <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-faint sm:col-span-3">
+                            {topic.category}
+                          </p>
+                          <h2 className="text-base leading-snug text-muted sm:col-span-7 sm:text-lg">
+                            {topic.title}
+                          </h2>
+                          <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-faint sm:col-span-2 sm:text-right">
+                            Draft
+                          </p>
+                        </div>
+                      </Reveal>
+                    </li>
+                  ))}
+                  <li className="border-t border-line" />
+                </ul>
+              ) : (
+                <Reveal>
+                  <p className="mt-8 border-t border-line pt-6 text-[0.9375rem] leading-relaxed text-muted">
+                    Notes soon.
+                  </p>
+                </Reveal>
+              )}
             </>
           )}
         </div>

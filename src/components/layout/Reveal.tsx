@@ -1,4 +1,4 @@
-import type { ElementType, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 /**
  * Marks a subtree for scroll-reveal. The animation is CSS-only and applies
@@ -7,22 +7,20 @@ import type { ElementType, ReactNode } from "react";
  */
 export function Reveal({
   children,
-  as: Tag = "div",
   delay = 0,
   className = "",
 }: {
   children: ReactNode;
-  as?: ElementType;
   delay?: number;
   className?: string;
 }) {
   return (
-    <Tag
+    <div
       data-reveal=""
       style={delay ? ({ "--reveal-delay": `${delay}ms` } as React.CSSProperties) : undefined}
       className={className}
     >
       {children}
-    </Tag>
+    </div>
   );
 }

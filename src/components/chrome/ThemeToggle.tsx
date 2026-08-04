@@ -9,10 +9,13 @@
  * hydration mismatch and no flash.
  */
 export function ThemeToggle() {
-  const toggle = () => {
+  const toggle = (event: React.MouseEvent<HTMLButtonElement>) => {
     const root = document.documentElement;
     const next = root.dataset.theme === "light" ? "dark" : "light";
     root.dataset.theme = next;
+    // Keep the label in step with the DOM, which is the source of truth here.
+    // Without this a screen-reader user has no way to tell which theme is on.
+    event.currentTarget.setAttribute("aria-label", `Switch to ${next === "light" ? "dark" : "light"} theme`);
     try {
       window.localStorage.setItem("theme", next);
     } catch {

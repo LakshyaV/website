@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Container } from "@/components/layout/Container";
+
+// Without this the 404 inherits `index: true` and a canonical pointing at "/".
+export const metadata: Metadata = {
+  title: "Not found",
+  robots: { index: false, follow: true },
+  alternates: { canonical: undefined },
+};
 
 export default function NotFound() {
   return (

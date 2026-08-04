@@ -6,6 +6,31 @@
  * rendered — replace them with real values when they exist.
  */
 
+/**
+ * Silently falling back to localhost in production would ship a live site whose
+ * canonicals, sitemap, robots, and JSON-LD all point at localhost — a total SEO
+ * failure with no build error. Fail the build instead.
+ */
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
+  if (explicit) return explicit.replace(/\/$/, "");
+
+  // Vercel supplies this at build time, so a normal deploy needs no config.
+  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (vercel) return `https://${vercel.replace(/\/$/, "")}`;
+
+  // Only hard-fail in an actual deploy: a plain local `next build` should still
+  // work on a fresh clone. Guarded to the server so the client never diverges.
+  const deploying = Boolean(process.env.VERCEL ?? process.env.CI);
+  if (typeof window === "undefined" && process.env.NODE_ENV === "production" && deploying) {
+    throw new Error(
+      "NEXT_PUBLIC_SITE_URL is not set. Set it to the deployed origin (e.g. https://example.com) so canonicals, the sitemap, robots, and JSON-LD do not point at localhost.",
+    );
+  }
+
+  return "http://localhost:3000";
+}
+
 export const site = {
   name: "Lakshya Vasudeva",
   monogram: "LV",
@@ -15,14 +40,14 @@ export const site = {
   tagline: "Machine learning researcher, engineer, and founder.",
 
   description:
-    "Lakshya Vasudeva is an engineer and researcher working on machine learning, biosignals, and new interfaces between human intent and machine intelligence. Currently building Origin and researching ML for surgical video.",
+    "Lakshya Vasudeva is a machine learning researcher, engineer, and founder working on biosignals and new interfaces between human intent and machine intelligence. Currently building Origin; previously machine learning research on surgical video at Mass Eye and Ear / Harvard Medical School.",
 
   /**
-   * Absolute site URL, used for metadata, sitemap, and structured data.
-   * Set NEXT_PUBLIC_SITE_URL to the deployed domain (e.g. in Vercel project
-   * settings). Falls back to localhost for local builds.
+   * Absolute site URL, used for metadata, canonicals, sitemap, robots, and
+   * structured data. Set NEXT_PUBLIC_SITE_URL to the deployed domain (e.g. in
+   * Vercel project settings); see resolveSiteUrl below for why it is enforced.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: resolveSiteUrl(),
 
   email: "lakyvasu22@gmail.com",
 
@@ -41,7 +66,7 @@ export const site = {
     { label: "Work", href: "/#work", secondary: false },
     { label: "Projects", href: "/#projects", secondary: false },
     { label: "About", href: "/#about", secondary: true },
-    { label: "Notes", href: "/notes", secondary: false },
+    { label: "Notes", href: "/notes", secondary: true },
     { label: "Contact", href: "/#contact", secondary: false },
   ],
 } as const;

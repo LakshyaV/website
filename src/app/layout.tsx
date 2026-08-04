@@ -11,7 +11,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Engineer & researcher`,
+    default: `${site.name} — ${site.tagline}`,
     template: `%s — ${site.name}`,
   },
   description: site.description,
@@ -43,10 +43,14 @@ export const metadata: Metadata = {
 };
 
 /**
- * Applied before paint so the stored theme never flashes. Dark is the site's
- * default identity; light is opt-in via the toggle and remembered per browser.
+ * Runs before first paint.
+ *
+ * Sets the stored theme so colour never flashes, and adds `js` — which arms the
+ * scroll-reveal styles. The `js` class must land before paint: applied later
+ * (from an effect) it would blank content that had already painted, then fade
+ * it back in.
  */
-const themeScript = `try{var t=localStorage.getItem("theme");document.documentElement.dataset.theme=t==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}`;
+const bootScript = `document.documentElement.classList.add("js");try{var t=localStorage.getItem("theme");document.documentElement.dataset.theme=t==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -56,7 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
       <body className="flex min-h-screen flex-col">
         <RevealInit />
