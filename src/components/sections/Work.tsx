@@ -110,7 +110,7 @@ export function Work() {
             <h3 className="text-[1.5rem] tracking-[-0.02em] sm:text-[1.875rem]">Before that</h3>
             <p className="mt-3 max-w-[52ch] text-[0.9375rem] leading-relaxed text-muted">
               Three roles, taken at fifteen, sixteen, and seventeen. Different industries,
-              one recurring job: make a model survive contact with a real system.
+              one recurring job, making a model survive contact with a real system.
             </p>
           </Reveal>
 

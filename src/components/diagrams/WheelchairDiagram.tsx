@@ -29,7 +29,7 @@ export function WheelchairDiagram() {
       viewBox="0 0 900 260"
       className="w-full text-fg"
       role="img"
-      aria-label="Conceptual diagram: raw EEG is filtered, converted to frequency-band features, classified into an intentional control state, smoothed, and sent to embedded motor actuation."
+      aria-label="Conceptual diagram in which raw EEG is filtered, converted to frequency-band features, classified into an intentional control state, smoothed, and sent to embedded motor actuation."
     >
       {/* stage 1 — raw */}
       <g className="d-step" style={{ "--s": 0 } as React.CSSProperties}>

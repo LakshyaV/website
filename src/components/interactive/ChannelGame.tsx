@@ -320,10 +320,10 @@ export function ChannelGame() {
   };
 
   const statusLine = {
-    idle: "Hold to articulate — pointer, touch, or space",
+    idle: "Hold to articulate. Pointer, touch, or space",
     listening: "Listening…",
-    hit: `Decoded — “${COMMANDS[(round - 1 + COMMANDS.length) % COMMANDS.length]}” sent`,
-    miss: "Pattern lost — try again",
+    hit: `Decoded. “${COMMANDS[(round - 1 + COMMANDS.length) % COMMANDS.length]}” sent`,
+    miss: "Pattern lost. Try again",
   }[status];
 
   const pip = (kind: number, key: string, dim = false) => (
@@ -338,7 +338,7 @@ export function ChannelGame() {
 
   return (
     <section
-      aria-label="The Channel — a silent input game"
+      aria-label="The Channel, a silent input game"
       className="channel-game mt-6 border border-line bg-surface"
     >
       <header className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-line px-5 py-3 sm:px-7">
@@ -372,7 +372,7 @@ export function ChannelGame() {
           ref={canvasRef}
           tabIndex={0}
           role="application"
-          aria-label="Signal scope. Hold space to articulate a pulse; short and long presses form the pattern."
+          aria-label="Signal scope. Hold space to articulate a pulse. Short and long presses form the pattern."
           onPointerDown={(e) => {
             e.currentTarget.setPointerCapture(e.pointerId);
             press();
@@ -406,7 +406,7 @@ export function ChannelGame() {
       </div>
 
       <p className="border-t border-line px-5 py-3 font-mono text-[0.625rem] uppercase leading-relaxed tracking-[0.14em] text-faint sm:px-7">
-        Your press timing is the signal — short and long bursts, decoded live. A toy,
+        Your press timing is the signal, short and long bursts decoded live. A toy,
         not the real system.
       </p>
     </section>

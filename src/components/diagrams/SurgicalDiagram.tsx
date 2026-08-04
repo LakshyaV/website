@@ -48,12 +48,12 @@ export function SurgicalDiagram() {
       viewBox="0 0 900 380"
       className="w-full text-fg"
       role="img"
-      aria-label="Conceptual diagram: densely annotated wet-lab frames supervise spatial attention; a temporal model encodes clip sequences; representations aggregate to a video-level classification and transfer to unlabelled clinical video."
+      aria-label="Conceptual diagram in which densely annotated wet-lab frames supervise spatial attention, a temporal model encodes clip sequences, and representations aggregate to a video-level classification that transfers to unlabelled clinical video."
     >
       {/* source */}
       <g className="d-step" style={{ "--s": 0 } as React.CSSProperties}>
         <text x="0" y="14" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
-          SOURCE — WET LAB · DENSE ANNOTATION
+          SOURCE · WET LAB · DENSE ANNOTATION
         </text>
         <Frame x={0} y={30} masked />
         <Frame x={98} y={30} masked />
@@ -114,7 +114,7 @@ export function SurgicalDiagram() {
       {/* temporal sequence */}
       <g className="d-step" style={{ "--s": 3 } as React.CSSProperties}>
         <text x="0" y="168" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
-          TEMPORAL MODEL — CLIP SEQUENCE
+          TEMPORAL MODEL · CLIP SEQUENCE
         </text>
         <line x1="0" y1="212" x2="640" y2="212" stroke="currentColor" strokeWidth="0.75" opacity="0.25" />
         {Array.from({ length: 16 }).map((_, i) => {
@@ -160,7 +160,7 @@ export function SurgicalDiagram() {
       {/* target */}
       <g className="d-step" style={{ "--s": 5 } as React.CSSProperties}>
         <text x="644" y="168" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
-          TARGET — CLINICAL
+          TARGET · CLINICAL
         </text>
         <Frame x={644} y={182} opacity={0.55} />
         <Frame x={742} y={182} opacity={0.4} />

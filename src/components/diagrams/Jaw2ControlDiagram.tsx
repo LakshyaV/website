@@ -28,12 +28,12 @@ export function Jaw2ControlDiagram() {
       viewBox="0 0 900 320"
       className="w-full text-fg"
       role="img"
-      aria-label="Conceptual diagram: two jaw-mounted inertial sensors feed a temporal convolutional network that recovers phonetic units and decodes them into intended speech, while a camera identifies the device being looked at and the command is routed to that device."
+      aria-label="Conceptual diagram in which two jaw-mounted inertial sensors feed a temporal convolutional network that recovers phonetic units and decodes them into intended speech, while a camera identifies the device being looked at and the command is routed to that device."
     >
       {/* lane A — silent articulation */}
       <g className="d-step" style={{ "--s": 0 } as React.CSSProperties}>
         <text x="0" y="16" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
-          A · JAW MOTION — 2× IMU
+          A · JAW MOTION · 2× IMU
         </text>
         <path d={jawTrace(1, 210, 62)} fill="none" stroke="currentColor" strokeWidth="1" opacity="0.75" />
         <path d={jawTrace(3.4, 210, 96)} fill="none" stroke="currentColor" strokeWidth="1" opacity="0.45" />
@@ -101,7 +101,7 @@ export function Jaw2ControlDiagram() {
       {/* lane B — gaze target */}
       <g className="d-step" style={{ "--s": 3 } as React.CSSProperties}>
         <text x="0" y="188" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
-          B · GAZE TARGET — OAK-1
+          B · GAZE TARGET · OAK-1
         </text>
         {/* camera frustum */}
         <path d="M6 232 L86 208 L86 260 Z" fill="currentColor" opacity="0.1" />

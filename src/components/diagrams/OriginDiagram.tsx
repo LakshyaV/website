@@ -36,7 +36,7 @@ export function OriginDiagram() {
       viewBox="0 0 900 340"
       className="w-full text-fg"
       role="img"
-      aria-label="Conceptual diagram: physiological signals captured near the temple, sideburn and ear are segmented, encoded by a temporal model, decoded into language units, and dispatched as an AI action."
+      aria-label="Conceptual diagram of physiological signals captured near the temple, sideburn and ear, then segmented, encoded by a temporal model, decoded into language units, and dispatched as an AI action."
     >
       {/* signal band */}
       <g className="d-step" style={{ "--s": 0 } as React.CSSProperties}>
@@ -149,7 +149,7 @@ export function OriginDiagram() {
           fontSize="9"
           letterSpacing="1.2"
         >
-          INTENDED LANGUAGE · CONFIDENCE 0.00—1.00
+          INTENDED LANGUAGE · CONFIDENCE 0.00 TO 1.00
         </text>
       </g>
 
@@ -267,7 +267,7 @@ export function OriginDiagram() {
           fontSize="9"
           letterSpacing="1.4"
         >
-          TARGET FORM FACTOR — GLASSES · NO SPEECH · NO VISIBLE GESTURE
+          TARGET FORM FACTOR · GLASSES · NO SPEECH · NO VISIBLE GESTURE
         </text>
       </g>
     </svg>
