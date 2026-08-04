@@ -1,0 +1,111 @@
+# lakshyavasudeva.com
+
+Personal site — a single scroll-driven narrative (curiosity → systems →
+intelligence → humans → interfaces) with a notes section for short technical
+writing.
+
+Built with Next.js (App Router), TypeScript in strict mode, Tailwind CSS v4, and
+Geist. There is no component library: the design system is a small set of CSS
+custom properties plus a handful of layout primitives.
+
+## Commands
+
+```bash
+npm run dev        # local dev server at http://localhost:3000
+npm run build      # production build
+npm start          # serve the production build
+npm run lint       # eslint
+npm run typecheck  # tsc --noEmit
+npm run check      # lint + typecheck + build
+```
+
+## Where the content lives
+
+All copy and project data is centralized. Editing these files is enough to
+update the site; no component changes required.
+
+| File | Contains |
+| --- | --- |
+| `src/content/site.ts` | Name, email, social URLs, resume path, nav items, canonical URL |
+| `src/content/copy.ts` | Hero, thesis, about, contact, and notes-page copy |
+| `src/content/projects.ts` | The three featured projects and the project index |
+| `src/content/notes/` | Published notes as `.mdx` files (see `_README.md` there) |
+| `src/lib/notes.ts` | Notes loader, plus `draftTopics` shown while nothing is published |
+
+`site.ts` fields that are `null` — LinkedIn, X, and `resume` — are treated as
+"not yet available" and are **not rendered anywhere**. Set them to real values
+and the corresponding links appear automatically. Nothing in the UI links to a
+placeholder.
+
+## Architecture
+
+```
+src/
+  app/                  routes, metadata, sitemap, robots, OG image
+  components/
+    chrome/             nav, footer, theme toggle, scroll progress, reveal init
+    layout/             Container, Reveal, SectionHeading primitives
+    diagrams/           conceptual SVG diagrams (one per featured project)
+    sections/           home page sections
+  content/              all editable copy and data
+  lib/                  notes loader, structured data
+```
+
+**Design tokens.** Color, motion easing, and duration are CSS custom properties
+in `src/app/globals.css`, exposed to Tailwind through `@theme inline`. Use
+`text-muted`, `border-line`, `bg-surface` and friends rather than raw hex
+values so both themes stay consistent.
+
+**Theming.** Dark is the default identity; light is opt-in via the toggle and
+stored in `localStorage`. An inline script in `src/app/layout.tsx` applies the
+stored theme before first paint, so there is no flash and no hydration
+mismatch. The toggle holds no React state — the root `data-theme` attribute is
+the single source of truth.
+
+**Motion.** Scroll reveals are CSS transitions gated behind `html.js`, which
+`RevealInit` adds on mount. If JavaScript is disabled or fails, every element
+renders in its final visible state — the site never depends on JS to be
+readable. `prefers-reduced-motion: reduce` disables reveals, diagram staggering,
+and smooth scrolling.
+
+**Diagrams.** The three SVGs in `src/components/diagrams/` are hand-authored
+conceptual illustrations, not plots of real data. Every one is labelled as such
+in its `figcaption`, and that labelling should be preserved if they are edited.
+They keep full detail on small screens by scrolling inside their own container
+rather than shrinking.
+
+## Notes
+
+Add a `.mdx` file to `src/content/notes/` with `title`, `summary`, `category`,
+`date`, and optional `draft: true` frontmatter. The index at `/notes` and each
+`/notes/<slug>` page are generated statically at build time.
+
+While no published notes exist, `/notes` renders an honest "nothing published
+yet" state. That list prefers the titles of real `draft: true` files and falls
+back to the placeholder topics in `draftTopics` only when there are none.
+Publishing a note switches the index over automatically.
+
+There is currently one draft, `the-bandwidth-problem.mdx`, carried over as-is.
+It is complete but marked `draft: true`, so it appears on `/notes` as a titled
+draft and has no page of its own. Remove that flag (and add a `date`) to
+publish it.
+
+## Deployment
+
+Deploy to Vercel (or any Node host running `next build` / `next start`).
+
+Set one environment variable so metadata, the sitemap, and structured data use
+the real domain:
+
+```
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
+
+Without it the build falls back to `http://localhost:3000`, which is fine
+locally but wrong for anything public.
+
+## Still to supply
+
+- `NEXT_PUBLIC_SITE_URL` on the deploy target
+- LinkedIn and X profile URLs in `src/content/site.ts` (currently `null`)
+- A resume PDF in `public/` plus its path in `site.resume` (currently `null`)
