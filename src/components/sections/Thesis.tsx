@@ -3,9 +3,13 @@ import { Reveal } from "@/components/layout/Reveal";
 import { SectionHeading } from "@/components/layout/SectionHeading";
 import { thesis } from "@/content/copy";
 
+/**
+ * No bottom padding: the thesis is a single short statement, and the Work
+ * section below supplies its own top padding as the separator.
+ */
 export function Thesis() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="pt-20 sm:pt-28">
       <Container>
         <SectionHeading number={thesis.number} label={thesis.label} />
         <div className="mt-12 grid gap-y-8 lg:grid-cols-12 lg:gap-x-10">
