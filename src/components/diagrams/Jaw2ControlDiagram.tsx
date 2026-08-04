@@ -31,7 +31,7 @@ export function Jaw2ControlDiagram() {
       aria-label="Conceptual diagram: two jaw-mounted inertial sensors feed a temporal convolutional network that recovers phonetic units and decodes them into intended speech, while a camera identifies the device being looked at and the command is routed to that device."
     >
       {/* lane A — silent articulation */}
-      <g className="d-step" style={{ "--d": "0ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 0 } as React.CSSProperties}>
         <text x="0" y="16" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           A · JAW MOTION — 2× IMU
         </text>
@@ -49,7 +49,7 @@ export function Jaw2ControlDiagram() {
       </g>
 
       {/* TCN → phonetic units */}
-      <g className="d-step" style={{ "--d": "240ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 1 } as React.CSSProperties}>
         <rect x="292" y="44" width="96" height="60" fill="none" stroke="currentColor" strokeWidth="0.75" opacity="0.5" />
         {[0, 1, 2].map((row) =>
           [0, 1, 2, 3].map((col) => (
@@ -74,7 +74,7 @@ export function Jaw2ControlDiagram() {
         <path d="M282 70 L290 74 L282 78 Z" fill="currentColor" opacity="0.35" />
       </g>
 
-      <g className="d-step" style={{ "--d": "440ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 2 } as React.CSSProperties}>
         {["/o/", "/p/", "/ə/", "/n/"].map((unit, i) => (
           <g key={unit}>
             <rect x={412 + i * 44} y="52" width="36" height="26" fill="none" stroke="currentColor" strokeWidth="0.75" opacity="0.45" />
@@ -99,7 +99,7 @@ export function Jaw2ControlDiagram() {
       </g>
 
       {/* lane B — gaze target */}
-      <g className="d-step" style={{ "--d": "620ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 3 } as React.CSSProperties}>
         <text x="0" y="188" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           B · GAZE TARGET — OAK-1
         </text>
@@ -127,10 +127,11 @@ export function Jaw2ControlDiagram() {
       </g>
 
       {/* routing */}
-      <g className="d-step" style={{ "--d": "820ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 4 } as React.CSSProperties}>
         <path
           className="d-path"
-          style={{ "--d": "820ms" } as React.CSSProperties}
+          pathLength="1"
+          style={{ "--s": 4 } as React.CSSProperties}
           d="M556 130 Q596 190 640 230"
           stroke="currentColor"
           strokeWidth="0.75"
@@ -139,7 +140,8 @@ export function Jaw2ControlDiagram() {
         />
         <path
           className="d-path"
-          style={{ "--d": "820ms" } as React.CSSProperties}
+          pathLength="1"
+          style={{ "--s": 4 } as React.CSSProperties}
           d="M300 236 L636 232"
           stroke="currentColor"
           strokeWidth="0.75"
@@ -159,7 +161,7 @@ export function Jaw2ControlDiagram() {
         </text>
       </g>
 
-      <g className="d-step" style={{ "--d": "1000ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 5 } as React.CSSProperties}>
         <path d="M0 296 L140 296" stroke="currentColor" strokeWidth="0.75" opacity="0.3" />
         <text x="0" y="314" className="fill-[var(--faint)] font-mono" fontSize="9" letterSpacing="1.4">
           NO SPEECH · NO KEYBOARD · NO VISIBLE GESTURE

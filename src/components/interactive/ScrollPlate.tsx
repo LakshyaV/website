@@ -18,6 +18,7 @@ export function ScrollPlate({
   children: ReactNode;
   caption: string;
 }) {
+  const figureRef = useRef<HTMLElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const [scrollable, setScrollable] = useState(false);
 
@@ -34,8 +35,48 @@ export function ScrollPlate({
     return () => observer.disconnect();
   }, []);
 
+  /**
+   * Publishes the plate's approach through the viewport as `--p` (0→1), which
+   * the diagrams read in CSS to advance their stages and drive a packet along
+   * the pipeline. Progress completes while the plate is still arriving, so a
+   * diagram sitting in view is fully resolved rather than frozen mid-run.
+   *
+   * Written straight to the node inside rAF — this must never trigger a render.
+   * If it never runs (JS off, reduced motion) the CSS falls back to `1`, i.e.
+   * the finished state.
+   */
+  useEffect(() => {
+    const figure = figureRef.current;
+    if (!figure) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const { top } = figure.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const progress = (vh - top) / (vh * 0.55);
+      figure.style.setProperty("--p", String(Math.min(1, Math.max(0, progress))));
+    };
+
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
-    <figure className="min-w-0">
+    <figure ref={figureRef} className="diagram-plate min-w-0">
       {/* Diagrams keep their full detail and scroll inside this frame on narrow
           screens rather than shrinking to illegibility. */}
       <div

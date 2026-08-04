@@ -51,7 +51,7 @@ export function SurgicalDiagram() {
       aria-label="Conceptual diagram: densely annotated wet-lab frames supervise spatial attention; a temporal model encodes clip sequences; representations aggregate to a video-level classification and transfer to unlabelled clinical video."
     >
       {/* source */}
-      <g className="d-step" style={{ "--d": "0ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 0 } as React.CSSProperties}>
         <text x="0" y="14" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           SOURCE — WET LAB · DENSE ANNOTATION
         </text>
@@ -64,10 +64,11 @@ export function SurgicalDiagram() {
       </g>
 
       {/* supervision arrow into attention */}
-      <g className="d-step" style={{ "--d": "240ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 1 } as React.CSSProperties}>
         <path
           className="d-path"
-          style={{ "--d": "240ms" } as React.CSSProperties}
+          pathLength="1"
+          style={{ "--s": 1 } as React.CSSProperties}
           d="M300 61 L392 61"
           stroke="currentColor"
           strokeWidth="0.75"
@@ -81,7 +82,7 @@ export function SurgicalDiagram() {
       </g>
 
       {/* attention grid */}
-      <g className="d-step" style={{ "--d": "420ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 2 } as React.CSSProperties}>
         <text x="404" y="14" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           SPATIAL ATTENTION
         </text>
@@ -111,7 +112,7 @@ export function SurgicalDiagram() {
       </g>
 
       {/* temporal sequence */}
-      <g className="d-step" style={{ "--d": "620ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 3 } as React.CSSProperties}>
         <text x="0" y="168" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           TEMPORAL MODEL — CLIP SEQUENCE
         </text>
@@ -136,7 +137,7 @@ export function SurgicalDiagram() {
       </g>
 
       {/* aggregation */}
-      <g className="d-step" style={{ "--d": "820ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 4 } as React.CSSProperties}>
         {[0, 1, 2, 3].map((i) => (
           <path
             key={i}
@@ -157,7 +158,7 @@ export function SurgicalDiagram() {
       </g>
 
       {/* target */}
-      <g className="d-step" style={{ "--d": "1000ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 5 } as React.CSSProperties}>
         <text x="644" y="168" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           TARGET — CLINICAL
         </text>
@@ -168,7 +169,8 @@ export function SurgicalDiagram() {
         </text>
         <path
           className="d-path"
-          style={{ "--d": "1000ms" } as React.CSSProperties}
+          pathLength="1"
+          style={{ "--s": 5 } as React.CSSProperties}
           d="M600 120 Q700 140 690 176"
           stroke="currentColor"
           strokeWidth="0.75"

@@ -32,7 +32,7 @@ export function WheelchairDiagram() {
       aria-label="Conceptual diagram: raw EEG is filtered, converted to frequency-band features, classified into an intentional control state, smoothed, and sent to embedded motor actuation."
     >
       {/* stage 1 — raw */}
-      <g className="d-step" style={{ "--d": "0ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 0 } as React.CSSProperties}>
         <text x="0" y="14" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           01 · RAW EEG
         </text>
@@ -41,7 +41,7 @@ export function WheelchairDiagram() {
       </g>
 
       {/* stage 2 — filtered */}
-      <g className="d-step" style={{ "--d": "220ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 2.6 } as React.CSSProperties}>
         <text x="228" y="14" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           02 · FILTERED
         </text>
@@ -52,7 +52,7 @@ export function WheelchairDiagram() {
       </g>
 
       {/* stage 3 — bands */}
-      <g className="d-step" style={{ "--d": "440ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 5.3 } as React.CSSProperties}>
         <text x="456" y="14" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           03 · BAND POWER
         </text>
@@ -81,7 +81,7 @@ export function WheelchairDiagram() {
       </g>
 
       {/* stage 4 — intent state */}
-      <g className="d-step" style={{ "--d": "640ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 7.2 } as React.CSSProperties}>
         <text x="612" y="14" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           04 · INTENT STATE
         </text>
@@ -116,7 +116,7 @@ export function WheelchairDiagram() {
       </g>
 
       {/* stage 5 — actuation */}
-      <g className="d-step" style={{ "--d": "840ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 9 } as React.CSSProperties}>
         <text x="770" y="14" className="fill-[var(--faint)] font-mono" fontSize="10" letterSpacing="1.6">
           05 · MOTORS
         </text>
@@ -130,17 +130,19 @@ export function WheelchairDiagram() {
         </text>
       </g>
 
-      {/* connecting rail */}
-      <g className="d-step" style={{ "--d": "1020ms" } as React.CSSProperties}>
+      {/* connecting rail — signal advances along it as the plate scrolls in */}
+      <g className="d-step" style={{ "--s": 0.5 } as React.CSSProperties}>
+        <line x1="0" y1="176" x2="900" y2="176" stroke="currentColor" strokeWidth="0.75" opacity="0.25" />
         <path
-          className="d-path"
-          style={{ "--d": "1020ms" } as React.CSSProperties}
-          d="M0 176 L900 176"
+          className="d-trail"
+          d="M0 176 L806 176"
+          pathLength="1"
           stroke="currentColor"
-          strokeWidth="0.75"
-          opacity="0.25"
+          strokeWidth="1.4"
+          opacity="0.8"
           fill="none"
         />
+        <circle className="d-packet" cx="0" cy="176" r="4" fill="currentColor" style={{ "--run": 806 } as React.CSSProperties} />
         {[0, 228, 456, 612, 806].map((x) => (
           <circle key={x} cx={x === 0 ? 2 : x} cy="176" r="2.5" fill="currentColor" opacity="0.55" />
         ))}

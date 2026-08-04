@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/layout/Reveal";
-import { RotatingRole } from "@/components/interactive/RotatingRole";
+import { DecodingRole } from "@/components/interactive/DecodingRole";
 import { hero } from "@/content/copy";
 
 export function Hero() {
@@ -23,7 +23,7 @@ export function Hero() {
                 <span className="font-cursive italic tracking-[-0.01em]">
                   {hero.statement.cursive}
                 </span>{" "}
-                <RotatingRole roles={hero.statement.roles} />.
+                <DecodingRole roles={hero.statement.roles} />.
               </p>
             </Reveal>
 

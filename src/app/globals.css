@@ -72,38 +72,81 @@ body {
   border-radius: 1px;
 }
 
-/* Typing caret: a hairline rule, sized to the type it sits in. */
-.caret {
-  display: none;
-  width: 0.045em;
-  height: 0.78em;
-  margin-left: 0.06em;
-  vertical-align: baseline;
-  background: currentColor;
-  opacity: 0.55;
-  animation: caret-blink 1.05s steps(1) infinite;
+/* A character that hasn't locked yet. The dimming is the confidence readout. */
+.decoding {
+  opacity: 0.28;
 }
 
-html.js .caret {
-  display: inline-block;
+/* ------------------------------- decode panel ------------------------------
+   The replay is CSS keyframes only, restarted by remounting the run. Elements
+   sit in their finished state until `[data-run]` is present, so the panel is
+   fully legible before it plays and if it never plays at all. */
+
+.decode-run[data-run] .dp-trace {
+  stroke-dasharray: 1;
+  animation: dp-draw 900ms var(--ease) both;
 }
 
-@keyframes caret-blink {
-  0%,
-  50% {
-    opacity: 0.55;
+.decode-run[data-run] .dp-unit {
+  animation: dp-rise 460ms var(--ease) both;
+  animation-delay: calc(560ms + var(--i) * 110ms);
+}
+
+.decode-run[data-run] .dp-bar {
+  animation: dp-fill 520ms var(--ease) both;
+  animation-delay: calc(640ms + var(--i) * 110ms);
+}
+
+.decode-run[data-run] .dp-word {
+  animation: dp-rise 420ms var(--ease) both;
+  animation-delay: calc(1400ms + var(--i) * 110ms);
+}
+
+.decode-run[data-run] .dp-verdict {
+  animation: dp-rise 420ms var(--ease) both;
+  animation-delay: 1850ms;
+}
+
+.dp-bar {
+  transform: scaleY(var(--v, 1));
+}
+
+@keyframes dp-draw {
+  from {
+    stroke-dashoffset: 1;
   }
-  50.01%,
-  100% {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dp-rise {
+  from {
     opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dp-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(var(--v, 1));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Must match the `html.js` selector's specificity to win against it. */
-  html.js .caret,
-  .caret {
-    display: none;
+  .decode-run[data-run] .dp-trace,
+  .decode-run[data-run] .dp-unit,
+  .decode-run[data-run] .dp-bar,
+  .decode-run[data-run] .dp-word,
+  .decode-run[data-run] .dp-verdict {
+    animation: none;
   }
 }
 
@@ -144,26 +187,36 @@ html.js [data-reveal].in {
   transform: none;
 }
 
-/* Diagram steps stagger in after their parent [data-reveal] intersects. */
-html.js [data-reveal] .d-step {
-  opacity: 0;
-  transition: opacity 600ms var(--ease);
-  transition-delay: var(--d, 0ms);
+/* ------------------------------ running diagrams ---------------------------
+   ScrollPlate publishes `--p` (0→1) as a plate approaches the viewport. Stages
+   light in order as the signal reaches them and a packet travels the pipeline,
+   so a diagram reads as a machine running rather than a picture fading in.
+
+   Everything falls back to `var(--p, 1)` — the finished state — so with no
+   JavaScript the diagrams render complete. `--s` is a stage index; the 0.1
+   spacing means stage n resolves at p ≈ 0.1n, and the ×8 makes each stage
+   resolve over roughly an eighth of the run. */
+
+html.js .diagram-plate .d-step {
+  opacity: clamp(0, calc((var(--p, 1) - var(--s, 0) * 0.1) * 8), 1);
 }
 
-html.js [data-reveal].in .d-step {
-  opacity: 1;
+/* Paths carry pathLength="1", so one rule draws every path correctly
+   regardless of its real length. */
+html.js .diagram-plate .d-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: clamp(0, calc(1 - (var(--p, 1) - var(--s, 0) * 0.1) * 4), 1);
 }
 
-html.js [data-reveal] .d-path {
-  stroke-dasharray: 1200;
-  stroke-dashoffset: 1200;
-  transition: stroke-dashoffset 1400ms var(--ease);
-  transition-delay: var(--d, 0ms);
+/* The signal itself: a filled rail that advances, led by a packet. */
+html.js .diagram-plate .d-trail {
+  stroke-dasharray: 1;
+  stroke-dashoffset: clamp(0, calc(1 - var(--p, 1) * 1.05), 1);
 }
 
-html.js [data-reveal].in .d-path {
-  stroke-dashoffset: 0;
+html.js .diagram-plate .d-packet {
+  transform: translateX(calc(var(--p, 1) * var(--run, 860) * 1px));
+  opacity: clamp(0, calc(var(--p, 1) * 6), 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -171,8 +224,10 @@ html.js [data-reveal].in .d-path {
     scroll-behavior: auto;
   }
   html.js [data-reveal],
-  html.js [data-reveal] .d-step,
-  html.js [data-reveal] .d-path {
+  html.js .diagram-plate .d-step,
+  html.js .diagram-plate .d-path,
+  html.js .diagram-plate .d-trail,
+  html.js .diagram-plate .d-packet {
     opacity: 1;
     transform: none;
     transition: none;

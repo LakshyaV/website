@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/layout/SectionHeading";
 import { OriginDiagram } from "@/components/diagrams/OriginDiagram";
 import { SurgicalDiagram } from "@/components/diagrams/SurgicalDiagram";
 import { ThreadRail } from "@/components/interactive/ThreadRail";
+import { DecodePanel } from "@/components/interactive/DecodePanel";
 import { DiagramPlate, Facets, ProjectTitle } from "./project-parts";
 import { origin, surgical, workCapabilities, workIndex } from "@/content/work";
 
@@ -35,6 +36,8 @@ export function Work() {
         <DiagramPlate caption={origin.diagramCaption} className="mt-14">
           <OriginDiagram />
         </DiagramPlate>
+
+        <DecodePanel />
 
         <div className="mt-14 grid gap-y-10 lg:grid-cols-12 lg:gap-x-10 [&>*]:min-w-0">
           <div className="lg:col-span-7">

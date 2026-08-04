@@ -39,7 +39,7 @@ export function OriginDiagram() {
       aria-label="Conceptual diagram: physiological signals captured near the temple, sideburn and ear are segmented, encoded by a temporal model, decoded into language units, and dispatched as an AI action."
     >
       {/* signal band */}
-      <g className="d-step" style={{ "--d": "0ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 0 } as React.CSSProperties}>
         <text
           x="0"
           y="18"
@@ -72,7 +72,7 @@ export function OriginDiagram() {
       </g>
 
       {/* segmentation windows */}
-      <g className="d-step" style={{ "--d": "260ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 1 } as React.CSSProperties}>
         {[40, 118, 196].map((x, i) => (
           <rect
             key={x}
@@ -99,7 +99,7 @@ export function OriginDiagram() {
       </g>
 
       {/* decoded units */}
-      <g className="d-step" style={{ "--d": "520ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 2 } as React.CSSProperties}>
         <text
           x="400"
           y="18"
@@ -154,7 +154,7 @@ export function OriginDiagram() {
       </g>
 
       {/* confidence bars */}
-      <g className="d-step" style={{ "--d": "700ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 3 } as React.CSSProperties}>
         <text
           x="700"
           y="18"
@@ -186,8 +186,9 @@ export function OriginDiagram() {
         ))}
       </g>
 
-      {/* pipeline rail */}
-      <g className="d-step" style={{ "--d": "880ms" } as React.CSSProperties}>
+      {/* pipeline rail — the packet advances with scroll and lights each stage
+          as it arrives, so the diagram reads as a machine running */}
+      <g className="d-step" style={{ "--s": 1 } as React.CSSProperties}>
         <line
           x1="0"
           y1="232"
@@ -197,10 +198,24 @@ export function OriginDiagram() {
           strokeWidth="0.75"
           opacity="0.28"
         />
+        <path
+          className="d-trail"
+          d="M0 232 L860 232"
+          pathLength="1"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          fill="none"
+          opacity="0.85"
+        />
+        <circle className="d-packet" cx="0" cy="232" r="4.5" fill="currentColor" />
         {STAGES.map((stage, i) => {
           const x = (stage.x / (STAGES.length - 1)) * 860;
           return (
-            <g key={stage.label}>
+            <g
+              key={stage.label}
+              className="d-step"
+              style={{ "--s": i * 2.2 } as React.CSSProperties}
+            >
               <circle cx={x} cy="232" r="3" fill="currentColor" opacity="0.7" />
               <text
                 x={x}
@@ -238,7 +253,7 @@ export function OriginDiagram() {
       </g>
 
       {/* form-factor note */}
-      <g className="d-step" style={{ "--d": "1040ms" } as React.CSSProperties}>
+      <g className="d-step" style={{ "--s": 5 } as React.CSSProperties}>
         <path
           d="M0 312 L120 312"
           stroke="currentColor"
