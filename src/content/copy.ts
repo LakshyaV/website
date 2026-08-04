@@ -16,7 +16,7 @@ export const hero = {
     roles: ["researcher", "engineer", "founder"],
   },
   support:
-    "Building Origin. Researched @ Harvard Medical School, MIT CSAIL. Prev @ Microsoft, Zebra Technologies, Interac.",
+    "Building Origin. Researched @ Harvard Medical School. Prev @ Microsoft, Zebra Technologies, Interac.",
   enter: { label: "The work", href: "#work" },
   meta: [
     "Ontario, Canada",

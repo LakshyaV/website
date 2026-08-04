@@ -55,21 +55,6 @@ export const workCapabilities = [
   "Systems optimization",
 ];
 
-/**
- * TODO — MIT CSAIL is named in the hero support line but has no entry here.
- * Fill in the role, dates, and what the work involved, then move this object
- * into `workIndex` below (it is deliberately excluded until then, so the site
- * never renders an unsubstantiated entry).
- *
- * export const csail: IndexEntry = {
- *   title: "MIT CSAIL",
- *   context: "<role>",
- *   description: "<what the work was>",
- *   bullets: ["<technical detail>"],
- *   capabilities: ["<pick from workCapabilities>"],
- * };
- */
-
 export const workIndex: IndexEntry[] = [
   {
     title: "Interac",
