@@ -77,79 +77,6 @@ body {
   opacity: 0.28;
 }
 
-/* ------------------------------- decode panel ------------------------------
-   The replay is CSS keyframes only, restarted by remounting the run. Elements
-   sit in their finished state until `[data-run]` is present, so the panel is
-   fully legible before it plays and if it never plays at all. */
-
-.decode-run[data-run] .dp-trace {
-  stroke-dasharray: 1;
-  animation: dp-draw 900ms var(--ease) both;
-}
-
-.decode-run[data-run] .dp-unit {
-  animation: dp-rise 460ms var(--ease) both;
-  animation-delay: calc(560ms + var(--i) * 110ms);
-}
-
-.decode-run[data-run] .dp-bar {
-  animation: dp-fill 520ms var(--ease) both;
-  animation-delay: calc(640ms + var(--i) * 110ms);
-}
-
-.decode-run[data-run] .dp-word {
-  animation: dp-rise 420ms var(--ease) both;
-  animation-delay: calc(1400ms + var(--i) * 110ms);
-}
-
-.decode-run[data-run] .dp-verdict {
-  animation: dp-rise 420ms var(--ease) both;
-  animation-delay: 1850ms;
-}
-
-.dp-bar {
-  transform: scaleY(var(--v, 1));
-}
-
-@keyframes dp-draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes dp-rise {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes dp-fill {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(var(--v, 1));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .decode-run[data-run] .dp-trace,
-  .decode-run[data-run] .dp-unit,
-  .decode-run[data-run] .dp-bar,
-  .decode-run[data-run] .dp-word,
-  .decode-run[data-run] .dp-verdict {
-    animation: none;
-  }
-}
-
 /* The thread rail only does something with JS, so it only appears with JS. */
 .thread-rail {
   display: none;
@@ -157,6 +84,15 @@ body {
 
 html.js .thread-rail {
   display: flex;
+}
+
+/* Same for the game: an unplayable canvas shouldn't invite you to play it. */
+.channel-game {
+  display: none;
+}
+
+html.js .channel-game {
+  display: block;
 }
 
 /* Theme toggle indicator: half-filled in dark, solid in light. */
