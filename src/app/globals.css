@@ -72,6 +72,41 @@ body {
   border-radius: 1px;
 }
 
+/* Typing caret: a hairline rule, sized to the type it sits in. */
+.caret {
+  display: none;
+  width: 0.045em;
+  height: 0.78em;
+  margin-left: 0.06em;
+  vertical-align: baseline;
+  background: currentColor;
+  opacity: 0.55;
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+html.js .caret {
+  display: inline-block;
+}
+
+@keyframes caret-blink {
+  0%,
+  50% {
+    opacity: 0.55;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Must match the `html.js` selector's specificity to win against it. */
+  html.js .caret,
+  .caret {
+    display: none;
+  }
+}
+
 /* The thread rail only does something with JS, so it only appears with JS. */
 .thread-rail {
   display: none;

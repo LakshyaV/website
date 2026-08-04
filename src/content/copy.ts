@@ -6,13 +6,14 @@
 export const hero = {
   name: "Lakshya Vasudeva",
   /**
-   * Rendered as: "17. {cursive}machine learning{/cursive} researcher + developer."
-   * Split so the cursive face applies to the middle fragment only.
+   * Rendered as: "17. {cursive}machine learning{/cursive} {role}."
+   * The cursive face applies to the middle fragment; `roles` is typed and
+   * retyped in place. The first entry is what renders without JavaScript.
    */
   statement: {
     lead: "17.",
     cursive: "machine learning",
-    rest: "researcher + developer.",
+    roles: ["researcher", "engineer", "founder"],
   },
   support:
     "Building Origin. Researched @ Harvard Research, MIT CSAIL. Prev @ Zebra Tech, Interac Corp.",

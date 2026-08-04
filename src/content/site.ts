@@ -12,7 +12,7 @@ export const site = {
   location: "Ontario, Canada",
 
   /** One-line identity used in metadata and structured data. */
-  tagline: "I build intelligent systems that move computing closer to human intent.",
+  tagline: "Machine learning researcher, engineer, and founder.",
 
   description:
     "Lakshya Vasudeva is an engineer and researcher working on machine learning, biosignals, and new interfaces between human intent and machine intelligence. Currently building Origin and researching ML for surgical video.",
