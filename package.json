@@ -33,5 +33,7 @@
   },
   "engines": {
     "node": ">=20.9"
-  }
+  },
+  "license": "MIT",
+  "description": "Personal site for Lakshya Vasudeva."
 }

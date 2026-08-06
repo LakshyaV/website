@@ -17,7 +17,26 @@ npm start          # serve the production build
 npm run lint       # eslint
 npm run typecheck  # tsc --noEmit
 npm run check      # lint + typecheck + build
+npm test           # end-to-end suite (needs a build first)
 ```
+
+## Tests
+
+`npm run build && npm test` boots the production server on port 4321, drives it
+with Playwright, and prints a pass or fail line per check. Filter to one suite
+with `npm test -- smoke`. CI runs the same command on every push and pull
+request.
+
+| Suite | Covers |
+| --- | --- |
+| `smoke` | Routes, metadata, JSON-LD, sitemap, robots, headings, link integrity |
+| `copy-style` | No em-dashes or colons in rendered text, aria-labels, titles, meta |
+| `responsive` | No horizontal scroll 320px to 2560px; no diagram clipped without its hint |
+| `a11y` | Keyboard order and focus rings, the no-JS render, reduced motion, nav state |
+| `interactions` | Hero decode, scroll-driven diagram packet, thread rail, the game |
+
+The suites target behaviours that have actually regressed here, not a coverage
+number. If you fix a bug, add the check that would have caught it.
 
 ## Where the content lives
 
