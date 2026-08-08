@@ -1,20 +1,30 @@
+import { readdir } from "node:fs/promises";
 import { chromium } from "playwright";
 
 import { createRecorder, startServer, stopServer } from "./lib/harness.mjs";
-import * as smoke from "./suites/smoke.mjs";
-import * as copyStyle from "./suites/copy-style.mjs";
-import * as responsive from "./suites/responsive.mjs";
-import * as a11y from "./suites/a11y.mjs";
-import * as interactions from "./suites/interactions.mjs";
 
 /**
  * Runs every suite against a real production build.
  *
  * Usage: npm run build && npm test
  * Filter with: npm test -- smoke a11y
+ *
+ * Suites are discovered from ./suites, so adding one is a single file. Each
+ * must export `name` and `run({ browser, baseUrl, check })`.
  */
 
-const ALL = [smoke, copyStyle, responsive, a11y, interactions];
+const suiteDir = new URL("./suites/", import.meta.url);
+const files = (await readdir(suiteDir)).filter((f) => f.endsWith(".mjs")).sort();
+
+const ALL = [];
+for (const file of files) {
+  const module = await import(new URL(file, suiteDir).href);
+  if (typeof module.run !== "function" || !module.name) {
+    console.error(`Suite ${file} must export \`name\` and \`run\`.`);
+    process.exit(1);
+  }
+  ALL.push(module);
+}
 const PORT = Number(process.env.TEST_PORT ?? 4321);
 
 const filters = process.argv.slice(2);
