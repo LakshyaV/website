@@ -18,12 +18,12 @@ const files = (await readdir(suiteDir)).filter((f) => f.endsWith(".mjs")).sort()
 
 const ALL = [];
 for (const file of files) {
-  const module = await import(new URL(file, suiteDir).href);
-  if (typeof module.run !== "function" || !module.name) {
+  const suite = await import(new URL(file, suiteDir).href);
+  if (typeof suite.run !== "function" || !suite.name) {
     console.error(`Suite ${file} must export \`name\` and \`run\`.`);
     process.exit(1);
   }
-  ALL.push(module);
+  ALL.push(suite);
 }
 const PORT = Number(process.env.TEST_PORT ?? 4321);
 

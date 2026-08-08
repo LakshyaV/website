@@ -45,7 +45,9 @@ export async function run({ browser, baseUrl, check }) {
       viewport: { width: 1440, height: 900 },
     });
     const page = await context.newPage();
-    await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
+    // `load`, not `domcontentloaded`: the latter can fire before the stylesheet
+    // applies, and every assertion here reads computed style.
+    await page.goto(baseUrl, { waitUntil: "load" });
 
     const state = await page.evaluate(() => {
       const reveals = [...document.querySelectorAll("[data-reveal]")];
