@@ -52,11 +52,22 @@ export function ScrollPlate({
 
     let frame = 0;
 
+    /**
+     * `START` is where the run begins, as a fraction of viewport height: the
+     * plate's top edge has to rise to 80% of the way up before anything moves.
+     * Starting at 1.0 meant the packet was already travelling while only the
+     * plate's top edge had appeared, so the run was half over by the time the
+     * diagram was worth looking at. `SPAN` is how much scrolling it takes to
+     * finish, so the pace is unchanged and only the entry point moves.
+     */
+    const START = 0.8;
+    const SPAN = 0.55;
+
     const update = () => {
       frame = 0;
       const { top } = figure.getBoundingClientRect();
       const vh = window.innerHeight;
-      const progress = (vh - top) / (vh * 0.55);
+      const progress = (vh * START - top) / (vh * SPAN);
       figure.style.setProperty("--p", String(Math.min(1, Math.max(0, progress))));
     };
 
