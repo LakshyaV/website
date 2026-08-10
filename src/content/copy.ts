@@ -19,7 +19,7 @@ export const hero = {
     roles: ["researcher", "engineer", "founder"],
   },
   support:
-    "Building Origin. Researched @ Harvard Medical School. Prev @ Microsoft, Zebra Technologies, Interac.",
+    "Building Origin. Researched @ Harvard Medical School. Prev @ Zebra Technologies, Interac. Worked w/ Microsoft.",
   enter: { label: "The work", href: "#work" },
   meta: [
     "Ontario, Canada",
@@ -40,7 +40,7 @@ export const contact = {
   number: "04",
   label: "Contact",
   lead: "you can reach out at...",
-  closing: "Built slowly, in the open, from Ontario.",
+  closing: "iterate. get feedback. repeat fast.",
 };
 
 export const notesPage = {
