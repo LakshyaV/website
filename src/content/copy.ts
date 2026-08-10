@@ -19,13 +19,9 @@ export const hero = {
     roles: ["researcher", "engineer", "founder"],
   },
   support:
-    "Building Origin. Researched @ Harvard Medical School. Prev @ Zebra Technologies, Interac. Worked w/ Microsoft.",
+    "Building Origin. Researched @ Harvard. Prev @ Zebra Technologies, Interac. Worked w/ Microsoft.",
   enter: { label: "The work", href: "#work" },
-  meta: [
-    "Ontario, Canada",
-    "Software Engineering · University of Waterloo",
-    "Currently building Origin",
-  ],
+  meta: ["Software Engineering · University of Waterloo", "Currently building Origin"],
 };
 
 export const thesis = {
