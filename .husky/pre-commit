@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Quick lint and typecheck before committing, so CI failures are
+# unlikely. Does not run the full build (too slow).
+npm run lint
+npm run typecheck
