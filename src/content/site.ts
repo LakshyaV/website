@@ -54,7 +54,7 @@ export const site = {
   /** Social profiles. `null` entries are hidden from the UI. */
   social: {
     github: "https://github.com/LakshyaV",
-    linkedin: null as string | null, // TODO: add LinkedIn profile URL
+    linkedin: "https://www.linkedin.com/in/lakshyav/" as string | null,
     x: null as string | null, // TODO: add X / Twitter profile URL
   },
 

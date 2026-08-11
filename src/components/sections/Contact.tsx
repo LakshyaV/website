@@ -1,6 +1,7 @@
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/layout/Reveal";
 import { SectionHeading } from "@/components/layout/SectionHeading";
+import { ContactForm } from "@/components/interactive/ContactForm";
 import { contact } from "@/content/copy";
 import { site } from "@/content/site";
 
@@ -25,12 +26,7 @@ export function Contact() {
               </p>
             </Reveal>
             <Reveal delay={90}>
-              <a
-                href={`mailto:${site.email}`}
-                className="mt-8 inline-block break-all border-b border-line pb-1.5 text-[1.5rem] tracking-[-0.02em] transition-colors duration-300 hover:border-fg sm:text-[2.25rem] lg:text-[2.75rem]"
-              >
-                {site.email}
-              </a>
+              <ContactForm />
             </Reveal>
           </div>
 

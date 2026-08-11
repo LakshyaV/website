@@ -58,7 +58,18 @@ export async function run({ browser, baseUrl, check }) {
         hiddenReveals: reveals.filter((el) => parseFloat(getComputedStyle(el).opacity) < 0.9).length,
         minStepOpacity: Math.min(...steps.map((el) => parseFloat(getComputedStyle(el).opacity))),
         gameHidden: game ? getComputedStyle(game).display === "none" : false,
-        emailPresent: Boolean(document.querySelector("a[href^='mailto:']")),
+        // The contact form is a native POST, so it must work with JS disabled:
+        // a real action, a message field, and a submit control.
+        contactFormNative: (() => {
+          const form = document.querySelector("#contact form");
+          return Boolean(
+            form &&
+              form.getAttribute("method")?.toUpperCase() === "POST" &&
+              form.getAttribute("action")?.startsWith("https://") &&
+              form.querySelector("textarea[name=message]") &&
+              form.querySelector("button[type=submit]"),
+          );
+        })(),
         textLength: document.body.innerText.length,
       };
     });
@@ -66,7 +77,11 @@ export async function run({ browser, baseUrl, check }) {
     check("content is readable without JS", state.hiddenReveals === 0, `${state.hiddenReveals}/${state.reveals} hidden`);
     check("diagrams render complete without JS", state.minStepOpacity > 0.99, `min ${state.minStepOpacity}`);
     check("the game hides itself without JS", state.gameHidden, String(state.gameHidden));
-    check("contact email is present without JS", state.emailPresent, String(state.emailPresent));
+    check(
+      "contact form submits natively without JS",
+      state.contactFormNative,
+      String(state.contactFormNative),
+    );
     check("page has substantial text without JS", state.textLength > 4000, `${state.textLength} chars`);
 
     await context.close();

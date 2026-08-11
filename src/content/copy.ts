@@ -35,7 +35,7 @@ export const thesis = {
 export const contact = {
   number: "04",
   label: "Contact",
-  lead: "you can reach out at...",
+  lead: "you can reach out here...",
   closing: "iterate. get feedback. repeat fast.",
 };
 
