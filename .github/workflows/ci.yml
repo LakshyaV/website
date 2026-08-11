@@ -36,6 +36,15 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_URL: https://example.com
 
+      # The diagrams and index prose are server components on purpose; a client
+      # bundle past this budget almost certainly means something heavy crossed
+      # the RSC boundary again. Chunks currently sit around 630KB.
+      - name: Enforce client bundle budget
+        run: |
+          size_kb=$(du -sk .next/static/chunks | cut -f1)
+          echo "Client chunks: ${size_kb}KB (budget 1000KB)"
+          [ "$size_kb" -lt 1000 ] || { echo "Bundle budget exceeded"; exit 1; }
+
       # Reuse this build for the test job instead of building twice.
       - name: Upload build
         uses: actions/upload-artifact@v4
