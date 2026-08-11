@@ -35,12 +35,20 @@ jobs:
           echo "$urls"
           echo
 
+          # FormSubmit sits behind a WAF that 403s datacenter IPs, including
+          # these runners, while serving browsers normally. For hosts like
+          # that a 403 still proves DNS, TLS, and a live service; only
+          # not-found, gone, or server errors mean the link has actually died.
+          WAF_OK='formsubmit\.co'
+
           failed=0
           for url in $urls; do
             code=$(curl -s -o /dev/null -w '%{http_code}' -L --max-time 20 \
               -A "Mozilla/5.0 (compatible; link-check)" "$url")
             if [ "$code" -ge 200 ] && [ "$code" -lt 400 ]; then
               echo "ok    $code  $url"
+            elif [ "$code" = "403" ] && printf '%s' "$url" | grep -qE "$WAF_OK"; then
+              echo "ok    $code  $url (WAF, host alive)"
             else
               echo "FAIL  $code  $url"
               failed=1
