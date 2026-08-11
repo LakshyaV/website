@@ -1,0 +1,49 @@
+name: External links
+
+# External URLs rot silently: a renamed GitHub account, a dead relay service,
+# a moved profile. Nothing on the site would error, visitors would just hit
+# 404s. This walks every https URL in the content layer once a month.
+
+on:
+  schedule:
+    - cron: "17 9 3 * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check every external URL in src/content and site config
+        run: |
+          set -u
+          # LinkedIn answers 999 to anything that is not a browser, so it
+          # cannot be checked this way and is skipped rather than false-failing.
+          # Template literals and doc placeholders are not URLs; drop anything
+          # with interpolation, and example.com from an error-message string.
+          SKIP='linkedin\.com|example\.com|[$`{]'
+
+          # The FormSubmit endpoint is assembled at runtime around the email
+          # address, so the service host is pinned here explicitly instead.
+          urls=$(printf '%s\n' "https://formsubmit.co"; \
+            grep -rhoE 'https://[^"'\''  )<>]+' src/content src/components/interactive/ContactForm.tsx \
+            | sed 's/[.,]$//' | grep -vE "$SKIP")
+          urls=$(printf '%s\n' "$urls" | sort -u)
+
+          echo "Checking:"
+          echo "$urls"
+          echo
+
+          failed=0
+          for url in $urls; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L --max-time 20 \
+              -A "Mozilla/5.0 (compatible; link-check)" "$url")
+            if [ "$code" -ge 200 ] && [ "$code" -lt 400 ]; then
+              echo "ok    $code  $url"
+            else
+              echo "FAIL  $code  $url"
+              failed=1
+            fi
+          done
+          exit $failed
