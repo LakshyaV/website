@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "check": "npm run lint && npm run typecheck && npm run build",
-    "test": "node tests/run.mjs"
+    "test": "node tests/run.mjs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@fontsource/instrument-serif": "^5.3.0",
@@ -27,6 +28,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
+    "husky": "^9.1.7",
     "playwright": "^1.62.1",
     "tailwindcss": "^4",
     "typescript": "^5"
