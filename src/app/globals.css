@@ -219,24 +219,7 @@ html.js .diagram-plate .d-packet {
   opacity: clamp(0, calc((1 - var(--rail, 1)) * 12), 1);
 }
 
-/* Thread filtering dims chapters that do not carry the selected thread.
-   Dimmed, never hidden, and never below the legibility floor. */
-.story-chapter {
-  transition: opacity 500ms var(--ease);
-}
 
-.story-chapter[data-dim="true"] {
-  opacity: 0.4;
-}
-
-/* The thread legend only does something with JS, so it only appears with JS. */
-.story-threads {
-  display: none;
-}
-
-html.js .story-threads {
-  display: flex;
-}
 
 /* ---------------------------------- notes ---------------------------------- */
 
