@@ -18,7 +18,8 @@ export async function run({ browser, baseUrl, check }) {
     const shape = await page.evaluate(() => ({
       h1: document.querySelector("h1")?.textContent.trim() ?? "",
       chapters: [...document.querySelectorAll("[data-chapter]")].map((el) => el.id),
-      h2s: document.querySelectorAll("[data-chapter] h2").length,
+      h3s: document.querySelectorAll("[data-chapter] h3").length,
+      acts: [...document.querySelectorAll("main section header h2")].map((h) => h.textContent.trim()),
       glyphs: document.querySelectorAll("[data-chapter] svg").length,
       navLinks: [...document.querySelectorAll("nav[aria-label=Chapters] a")].map((a) =>
         a.getAttribute("href"),
@@ -27,12 +28,21 @@ export async function run({ browser, baseUrl, check }) {
     }));
 
     check("story renders a heading", shape.h1.length > 0, shape.h1);
-    check("nine chapters render", shape.chapters.length === 9, shape.chapters.join(","));
-    check("every chapter has a title", shape.h2s === 9, `${shape.h2s} titles`);
-    check("every chapter draws a glyph", shape.glyphs === 9, `${shape.glyphs} glyphs`);
+    check("thirteen chapters render", shape.chapters.length === 13, shape.chapters.join(","));
+    check("every chapter has a title", shape.h3s === 13, `${shape.h3s} titles`);
+    check("every chapter draws a glyph", shape.glyphs === 13, `${shape.glyphs} glyphs`);
+    check(
+      "four act headers chain the through-line",
+      shape.acts.length === 4 &&
+        shape.acts[0].startsWith("First") &&
+        shape.acts[1].startsWith("then") &&
+        shape.acts[2].startsWith("then") &&
+        shape.acts[3].startsWith("now"),
+      shape.acts.join(" | "),
+    );
     check(
       "the index links to every chapter",
-      shape.navLinks.length === 9 &&
+      shape.navLinks.length === 13 &&
         shape.navLinks.every((href, i) => href === `#${shape.chapters[i]}`),
       shape.navLinks.join(" "),
     );
@@ -107,7 +117,7 @@ export async function run({ browser, baseUrl, check }) {
     const lit = filtered.filter((c) => !c.dim).map((c) => c.id);
     check(
       "pulling Signals lights exactly the chapters that carry it",
-      lit.join(",") === "hinge,research,proof,now",
+      lit.join(",") === "earlymodels,hinge,research,proof,now",
       `lit ${lit.join(",")} dim ${dimmed.join(",")}`,
     );
 
@@ -153,7 +163,7 @@ export async function run({ browser, baseUrl, check }) {
       };
     });
 
-    check("no-JS renders all chapters", state.chapters === 9, `${state.chapters}`);
+    check("no-JS renders all chapters", state.chapters === 13, `${state.chapters}`);
     check("no-JS chapters are fully lit", state.minStep > 0.99, `min ${state.minStep}`);
     check(
       "no-JS spine renders complete",

@@ -27,6 +27,161 @@ const stroke = {
   strokeWidth: 1.1,
 } as const;
 
+/** Snapped blocks becoming typed syntax. */
+function Blocks() {
+  return (
+    <Frame>
+      <g className="d-step" style={s(0)}>
+        {[0, 1, 2].map((i) => (
+          <g key={i}>
+            <rect x="24" y={34 + i * 24} width="56" height="20" rx="3" {...stroke} />
+            {/* the snap notch */}
+            <path d={`M40 ${34 + i * 24} v-4 h12 v4`} {...stroke} />
+          </g>
+        ))}
+      </g>
+      <g className="d-step" style={s(1.6)}>
+        <path className="d-path" pathLength="1" d="M92 68 H120" {...stroke} strokeDasharray="2 3" />
+        <path d="M116 64 L122 68 L116 72" {...stroke} />
+      </g>
+      <g className="d-step" style={s(2.6)}>
+        <rect x="130" y="36" width="72" height="64" {...stroke} />
+        <text x="140" y="58" className="fill-[var(--fg)] font-mono" fontSize="10" opacity="0.85">
+          {"class M {"}
+        </text>
+        <text x="148" y="74" className="fill-[var(--fg)] font-mono" fontSize="10" opacity="0.6">
+          {"run();"}
+        </text>
+        <text x="140" y="90" className="fill-[var(--fg)] font-mono" fontSize="10" opacity="0.85">
+          {"}"}
+        </text>
+      </g>
+      <g className="d-step" style={s(3.4)}>
+        <text x="24" y="122" className="fill-[var(--faint)] font-mono" fontSize="9" letterSpacing="1.4">
+          BLOCKS TO JAVA
+        </text>
+      </g>
+    </Frame>
+  );
+}
+
+/** One screen at the front, a room of screens learning from it. */
+function Club() {
+  return (
+    <Frame>
+      <g className="d-step" style={s(0)}>
+        <rect x="24" y="28" width="44" height="30" {...stroke} />
+        <text x="34" y="48" className="fill-[var(--fg)] font-mono" fontSize="11" opacity="0.85">
+          &lt;/&gt;
+        </text>
+      </g>
+      <g className="d-step" style={s(1.4)}>
+        {[0, 1, 2].map((i) => (
+          <path
+            key={i}
+            className="d-path"
+            pathLength="1"
+            d={`M70 46 C 96 ${52 + i * 4}, 104 ${70 + i * 18}, ${118} ${76 + i * 22}`}
+            {...stroke}
+            strokeDasharray="2 3"
+            opacity="0.55"
+          />
+        ))}
+      </g>
+      <g className="d-step" style={s(2.4)}>
+        {[0, 1, 2].map((i) => (
+          <rect key={i} x={122 + i * 32} y={70 + i * 4} width="24" height="17" {...stroke} opacity="0.75" />
+        ))}
+      </g>
+      <g className="d-step" style={s(3.2)}>
+        <text x="24" y="122" className="fill-[var(--faint)] font-mono" fontSize="9" letterSpacing="1.4">
+          GRADE TWO TEACHING GRADE FIVE
+        </text>
+      </g>
+    </Frame>
+  );
+}
+
+/** A brick robot and the mission it has to reach. */
+function Fll() {
+  return (
+    <Frame>
+      <g className="d-step" style={s(0)}>
+        <line x1="16" x2="204" y1="96" y2="96" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+        <rect x="28" y="64" width="40" height="24" {...stroke} />
+        <path d="M36 64 v-6 h8 v6 M52 64 v-6 h8 v6" {...stroke} />
+        <circle cx="38" cy="92" r="6" {...stroke} />
+        <circle cx="58" cy="92" r="6" {...stroke} />
+      </g>
+      <g className="d-step" style={s(1.6)}>
+        <path
+          className="d-path"
+          pathLength="1"
+          d="M72 76 C 104 68, 128 84, 158 78"
+          {...stroke}
+          strokeDasharray="3 4"
+        />
+      </g>
+      <g className="d-step" style={s(2.6)}>
+        <line x1="166" x2="166" y1="52" y2="96" stroke="currentColor" strokeWidth="1.1" />
+        <path d="M166 52 L184 58 L166 64 Z" fill="currentColor" opacity="0.7" />
+      </g>
+      <g className="d-step" style={s(3.4)}>
+        <text x="16" y="122" className="fill-[var(--faint)] font-mono" fontSize="9" letterSpacing="1.4">
+          MISSION TABLE
+        </text>
+      </g>
+    </Frame>
+  );
+}
+
+/** A hand's landmarks and a cry's waveform, both resolving to meaning. */
+function ReadModels() {
+  return (
+    <Frame>
+      <g className="d-step" style={s(0)}>
+        {/* five fingers as landmark chains from a palm point */}
+        {[
+          "M48 84 L38 58 L34 44",
+          "M48 84 L48 52 L48 36",
+          "M48 84 L58 54 L62 40",
+          "M48 84 L66 62 L74 52",
+          "M48 84 L68 76 L80 72",
+        ].map((d, i) => (
+          <path key={i} className="d-path" pathLength="1" d={d} {...stroke} opacity="0.75" />
+        ))}
+        {[
+          [34, 44], [48, 36], [62, 40], [74, 52], [80, 72], [48, 84],
+        ].map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r="2.2" fill="currentColor" />
+        ))}
+      </g>
+      <g className="d-step" style={s(1.6)}>
+        <path
+          className="d-path"
+          pathLength="1"
+          d="M36 110 L44 110 48 102 54 118 60 106 66 112 74 110 84 110"
+          {...stroke}
+          opacity="0.7"
+        />
+      </g>
+      <g className="d-step" style={s(2.6)}>
+        <path className="d-path" pathLength="1" d="M96 84 H126" {...stroke} strokeDasharray="2 3" />
+        <path d="M122 80 L128 84 L122 88" {...stroke} />
+        <rect x="134" y="70" width="68" height="28" {...stroke} />
+        <text x="146" y="88" className="fill-[var(--fg)] font-mono" fontSize="9" letterSpacing="1" opacity="0.85">
+          MEANING
+        </text>
+      </g>
+      <g className="d-step" style={s(3.4)}>
+        <text x="36" y="34" className="fill-[var(--faint)] font-mono" fontSize="9" letterSpacing="1.4">
+          HUMAN SIGNAL IN
+        </text>
+      </g>
+    </Frame>
+  );
+}
+
 /** Chassis, wheels, and the autonomous path it must hold. */
 function Vex() {
   return (
@@ -311,6 +466,10 @@ function Origin() {
 }
 
 export const storyGlyphs: Record<string, () => ReactNode> = {
+  blocks: Blocks,
+  club: Club,
+  fll: Fll,
+  readmodels: ReadModels,
   vex: Vex,
   eeg: Eeg,
   datacenter: Datacenter,
