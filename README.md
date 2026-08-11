@@ -34,6 +34,14 @@ request.
 | `responsive` | No horizontal scroll 320px to 2560px; no diagram clipped without its hint |
 | `a11y` | Keyboard order and focus rings, the no-JS render, reduced motion, nav state |
 | `interactions` | Hero decode, scroll-driven diagram packet, thread rail, the game |
+| `contact` | Form payload, success and failure states, honeypot, social links (service intercepted) |
+| `theme` | Dark default, persistence, theme and `js` class applied before first paint |
+| `seo-assets` | Sitemap contents, robots, social card, favicon, 404 stays noindex |
+| `notes` | Draft handling, empty state, draft slugs 404, nav link |
+| `thread-integrity` | Every capability chip filters correctly and reaches every entry |
+
+Suites are auto-discovered from `tests/suites/`, so adding one is a single file
+exporting `name` and `run`.
 
 The suites target behaviours that have actually regressed here, not a coverage
 number. If you fix a bug, add the check that would have caught it.
@@ -46,19 +54,19 @@ update the site; no component changes required.
 | File | Contains |
 | --- | --- |
 | `src/content/site.ts` | Name, email, social URLs, resume path, nav items, canonical URL |
-| `src/content/copy.ts` | Hero, thesis, about, contact, and notes-page copy |
+| `src/content/copy.ts` | Hero, thesis, contact, and notes-page copy |
 | `src/content/work.ts` | Origin, the Harvard research, and the earlier-roles index |
 | `src/content/projects.ts` | jaw2control, the wheelchair, and the projects index |
 | `src/content/types.ts` | Shared `Featured` / `IndexEntry` shapes |
 | `src/content/notes/` | Published notes as `.mdx` files (see `_README.md` there) |
-| `src/lib/notes.ts` | Notes loader, plus `draftTopics` shown while nothing is published |
+| `src/lib/notes.ts` | Notes loader (published and draft frontmatter parsing) |
 
 The page splits into **Work** (roles: Origin, Harvard, Interac, Zebra,
 Microsoft) and **Projects** (things built independently: jaw2control, the
 wheelchair, AIcruiter, Vursor, CheetCode, VEX). Adding an entry to either index
 is a matter of appending to the relevant array.
 
-`site.ts` fields that are `null` — LinkedIn, X, and `resume` — are treated as
+`site.ts` fields that are `null` — currently X and `resume` — are treated as
 "not yet available" and are **not rendered anywhere**. Set them to real values
 and the corresponding links appear automatically. Nothing in the UI links to a
 placeholder.
@@ -72,6 +80,7 @@ src/
     chrome/             nav, footer, theme toggle, scroll progress, reveal init
     layout/             Container, Reveal, SectionHeading primitives
     diagrams/           conceptual SVG diagrams (one per featured project)
+    interactive/        client components: hero decode, scroll plates, thread rail, game, contact form
     sections/           home page sections
   content/              all editable copy and data
   lib/                  notes loader, structured data
@@ -121,9 +130,8 @@ Add a `.mdx` file to `src/content/notes/` with `title`, `summary`, `category`,
 `/notes/<slug>` page are generated statically at build time.
 
 While no published notes exist, `/notes` renders an honest "nothing published
-yet" state. That list prefers the titles of real `draft: true` files and falls
-back to the placeholder topics in `draftTopics` only when there are none.
-Publishing a note switches the index over automatically.
+yet" state listing the titles of `draft: true` files. Publishing a note
+switches the index over automatically.
 
 There is currently one draft, `the-bandwidth-problem.mdx`, carried over as-is.
 It is complete but marked `draft: true`, so it appears on `/notes` as a titled
@@ -142,10 +150,20 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
 Without it the build falls back to `http://localhost:3000`, which is fine
-locally but wrong for anything public.
+locally but wrong for anything public. A deploy from CI or Vercel fails the
+build if it is missing rather than shipping localhost canonicals.
+
+**Contact form activation.** The form posts through FormSubmit to the address
+in `site.email`, with no account or key. The service activates per address on
+first use: the first submission triggers a one-time confirmation email, and
+nothing forwards until its link is clicked. Submit the form once after
+deploying and confirm. FormSubmit then also offers a random alias endpoint
+that can replace the raw address in `ContactForm.tsx` to keep it out of the
+page source.
 
 ## Still to supply
 
 - `NEXT_PUBLIC_SITE_URL` on the deploy target
-- LinkedIn and X profile URLs in `src/content/site.ts` (currently `null`)
+- One-time FormSubmit confirmation after the first deployed submission
+- X profile URL in `src/content/site.ts` (currently `null`)
 - A resume PDF in `public/` plus its path in `site.resume` (currently `null`)
