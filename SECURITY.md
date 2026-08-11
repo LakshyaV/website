@@ -1,8 +1,13 @@
 # Security
 
-This is a personal website. It has no backend, no database, no authentication,
-and it stores nothing about visitors. The only client-side state is a theme
-preference in `localStorage`.
+This is a personal website. It has no backend, no database, and no
+authentication. The only client-side state is a theme preference in
+`localStorage`.
+
+The one place visitor data exists at all is the contact form. A submitted
+message and reply address are relayed through [FormSubmit](https://formsubmit.co)
+to my inbox; the site itself stores nothing, and no analytics or tracking run
+anywhere.
 
 ## Reporting
 
@@ -15,7 +20,8 @@ will confirm within a few days.
 In scope:
 
 - Anything that lets a third party inject or execute script on the deployed site
-- Anything that leaks visitor data
+- Anything that leaks visitor data, including contact form submissions in transit
+- Abuse of the contact form endpoint beyond ordinary spam (e.g. header injection)
 - Supply-chain problems in the dependencies listed in `package.json`
 
 Not in scope:
