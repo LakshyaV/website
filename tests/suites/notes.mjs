@@ -43,7 +43,8 @@ export async function run({ browser, baseUrl, check }) {
   const draft = await page.request.get(`${baseUrl}/notes/the-bandwidth-problem`);
   check("a draft slug does not resolve", draft.status() === 404, `status ${draft.status()}`);
 
-  // The notes link in the nav should reach this page.
+  // The nav slot went to the story page; /notes stays reachable by URL but is
+  // deliberately unlinked until something is published.
   await page.goto(baseUrl, { waitUntil: "networkidle" });
   const navHref = await page.evaluate(
     () =>
@@ -51,7 +52,7 @@ export async function run({ browser, baseUrl, check }) {
         .find((a) => /notes/i.test(a.textContent))
         ?.getAttribute("href") ?? "",
   );
-  check("nav links to notes", navHref === "/notes", navHref || "missing");
+  check("nav no longer links to notes", navHref === "", navHref || "absent");
 
   await page.close();
 }

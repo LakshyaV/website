@@ -133,13 +133,15 @@ html.js [data-reveal].in {
    spacing means stage n resolves at p ≈ 0.1n, and the ×8 makes each stage
    resolve over roughly an eighth of the run. */
 
-html.js .diagram-plate .d-step {
+html.js .diagram-plate .d-step,
+html.js .story-chapter .d-step {
   opacity: clamp(0, calc((var(--p, 1) - var(--s, 0) * 0.1) * 8), 1);
 }
 
 /* Paths carry pathLength="1", so one rule draws every path correctly
    regardless of its real length. */
-html.js .diagram-plate .d-path {
+html.js .diagram-plate .d-path,
+html.js .story-chapter .d-path {
   stroke-dasharray: 1;
   stroke-dashoffset: clamp(0, calc(1 - (var(--p, 1) - var(--s, 0) * 0.1) * 4), 1);
 }
@@ -163,13 +165,77 @@ html.js .diagram-plate .d-packet {
   html.js .diagram-plate .d-step,
   html.js .diagram-plate .d-path,
   html.js .diagram-plate .d-trail,
-  html.js .diagram-plate .d-packet {
+  html.js .diagram-plate .d-packet,
+  html.js .story-chapter .d-step,
+  html.js .story-chapter .d-path {
     opacity: 1;
     transform: none;
     transition: none;
     stroke-dasharray: none;
     stroke-dashoffset: 0;
   }
+  .story-spine-fill {
+    transform: none;
+  }
+  .story-spine-packet {
+    display: none;
+  }
+}
+
+/* ------------------------------- story rail --------------------------------
+   The spine is the story's pipeline rail turned vertical. `--rail` (0→1) is
+   published by StoryRail as the visitor travels the page; the fill scales to
+   it and the packet rides its leading edge. Both default to the finished
+   state, so without JavaScript the rail renders complete and the packet
+   rests at the end. */
+
+.story-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: color-mix(in srgb, var(--fg) 14%, transparent);
+}
+
+.story-spine-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  opacity: 0.75;
+  transform: scaleY(var(--rail, 1));
+  transform-origin: top;
+}
+
+.story-spine-packet {
+  position: absolute;
+  top: calc(var(--rail, 1) * 100%);
+  left: 50%;
+  height: 9px;
+  width: 9px;
+  border-radius: 9999px;
+  background: var(--fg);
+  transform: translate(-50%, -50%);
+  opacity: clamp(0, calc((1 - var(--rail, 1)) * 12), 1);
+}
+
+/* Thread filtering dims chapters that do not carry the selected thread.
+   Dimmed, never hidden, and never below the legibility floor. */
+.story-chapter {
+  transition: opacity 500ms var(--ease);
+}
+
+.story-chapter[data-dim="true"] {
+  opacity: 0.4;
+}
+
+/* The thread legend only does something with JS, so it only appears with JS. */
+.story-threads {
+  display: none;
+}
+
+html.js .story-threads {
+  display: flex;
 }
 
 /* ---------------------------------- notes ---------------------------------- */
