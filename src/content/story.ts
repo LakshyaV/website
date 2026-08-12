@@ -36,10 +36,26 @@ export const storySections: StorySection[] = [
   {
     line: "I was always the youngest in the room",
     entries: [
-      { stamp: "Zero", text: "Born in Ontario." },
+      {
+        stamp: "Zero",
+        text: "Born in Ontario. Youngest in the room from day one.",
+      },
+      {
+        stamp: "Nationals",
+        text: "Top six in the country at HOSA with a mind-controlled wheelchair. Not first. Top six does not hang a medal on you.",
+      },
+      {
+        stamp: "Y Combinator",
+        text: "They called after a hackathon, then passed. Too broad a market, too thin an edge. The first no that stung.",
+      },
+    ],
+  },
+  {
+    line: "so I let the building do the talking",
+    entries: [
       {
         stamp: "Six",
-        text: "Found block code. Snapped shapes together until the screen did what I said. Watched a thing I made actually move.",
+        text: "Taught myself block code. Snapped shapes together until the screen did what I said. Watched a thing I made actually move.",
       },
       {
         stamp: "Six",
@@ -77,18 +93,9 @@ export const storySections: StorySection[] = [
         stamp: "Meanwhile",
         text: "Taught a snake to play itself with reinforcement learning. Small, useless, completely formative.",
       },
-    ],
-  },
-  {
-    line: "so I let the building do the talking",
-    entries: [
       {
         stamp: "High school",
-        text: "Built a mind-controlled wheelchair around an OpenBCI headset. Raw EEG in, motion out.",
-      },
-      {
-        stamp: "Nationals",
-        text: "Top six in the country at HOSA. Not first. The chair mattered more than the placing. Robotics, biosignals, and interfaces stopped being separate hobbies that week.",
+        text: "Built the wheelchair. An OpenBCI headset, raw EEG in, motion out. Robotics, biosignals, and interfaces stopped being separate hobbies inside one build.",
       },
       {
         stamp: "Fifteen",
@@ -116,11 +123,7 @@ export const storySections: StorySection[] = [
       },
       {
         stamp: "Hackathons",
-        text: "Vursor. Plain English in, video edits out. Y Combinator called. An interview, out of fifteen hundred builders.",
-      },
-      {
-        stamp: "And then",
-        text: "YC passed. Too broad a market, too thin an edge. The first no that stung.",
+        text: "Vursor. Plain English in, video edits out. The one Y Combinator called about, an interview out of fifteen hundred builders.",
       },
       {
         stamp: "Harvard",
